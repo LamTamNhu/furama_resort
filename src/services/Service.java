@@ -1,13 +1,13 @@
 package services;
 
-import java.util.List;
+import model.Employee;
 
 public interface Service {
     Object getAll();
 
     void addEntry(Object entry);
 
-    void editEntry(String id);
+    void editEntry(String id, Employee editedEmployee);
 
     void removeEntry(String id);
 

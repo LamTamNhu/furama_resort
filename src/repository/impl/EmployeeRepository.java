@@ -2,18 +2,75 @@ package repository.impl;
 
 import model.Employee;
 import repository.IEmployeeRepository;
-import utils.FileReader;
+import utils.CsvFileReader;
+import utils.CsvFileWriter;
+import utils.enums.Gender;
+import utils.enums.Position;
+import utils.enums.Qualification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository implements IEmployeeRepository {
     private static List<Employee> employees = new ArrayList<>();
+    private static final String PATH = "src/data/EmployeeList.csv";
+    private static final String SEPARATOR = ",";
+
+    private static List<String> convertListToCsvFormat() {
+
+        List<String> convertedList = new ArrayList<>();
+        StringBuilder employeeToString = new StringBuilder();
+        for (Employee e : employees) {
+            employeeToString.setLength(0);
+            employeeToString.append(e.getName()).append(SEPARATOR);
+            employeeToString.append(e.getBirthDate()).append(SEPARATOR);
+            employeeToString.append(e.getGender()).append(SEPARATOR);
+            employeeToString.append(e.getIdNumber()).append(SEPARATOR);
+            employeeToString.append(e.getPhoneNumber()).append(SEPARATOR);
+            employeeToString.append(e.getEmail()).append(SEPARATOR);
+            employeeToString.append(e.getEmployeeId()).append(SEPARATOR);
+            employeeToString.append(e.getQualification()).append(SEPARATOR);
+            employeeToString.append(e.getPosition()).append(SEPARATOR);
+            employeeToString.append(e.getSalary());
+
+            convertedList.add(String.valueOf(employeeToString));
+        }
+        return convertedList;
+    }
+
+    public static List<Employee> convertCsvFormatToList(List<String> rawListFromCsv) {
+        List<Employee> updatedList = new ArrayList<>();
+        String[] parsedLine;
+        for (String line : rawListFromCsv) {
+            parsedLine = line.split(SEPARATOR);
+            String name = parsedLine[0];
+            String birthday = parsedLine[1];
+            Gender gender = Gender.valueOf(parsedLine[2]);
+            String idNumber = parsedLine[3];
+            String phoneNumber = parsedLine[4];
+            String email = parsedLine[5];
+            String employeeId = parsedLine[6];
+            Qualification qualification = Qualification.valueOf(parsedLine[7]);
+            Position position = Position.valueOf(parsedLine[8]);
+            Double salary = Double.valueOf(parsedLine[9]);
+            updatedList.add(new Employee(name, birthday, gender, idNumber, phoneNumber, email, employeeId, qualification, position, salary));
+        }
+        return updatedList;
+    }
 
     private static void updateFromFile() {
-        Object updatedList = FileReader.readObjectFromFile("src/data/EmployeeList.csv");
-        employees = (List<Employee>) updatedList;
+        List<String> rawCsvFromFile = CsvFileReader.readObjectFromFile(PATH);
+        if (rawCsvFromFile == null) {
+            System.out.println("Can't update from empty file.");
+            return;
+        }
+        employees = convertCsvFormatToList(rawCsvFromFile);
     }
+
+    private static void writeToFile() {
+        CsvFileWriter.writeObjectToFile(convertListToCsvFormat(), PATH);
+    }
+
 
     @Override
     public List<Employee> getAll() {
@@ -23,6 +80,7 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override
     public Object findById(String id) {
+        updateFromFile();
         for (Employee e : employees) {
             if (id.equals(e.getEmployeeId())) {
                 return e;
@@ -33,22 +91,33 @@ public class EmployeeRepository implements IEmployeeRepository {
 
     @Override
     public Object findByName(String productName) {
+        updateFromFile();
         return null;
     }
 
     @Override
-    public Boolean addEntry(Object product) {
-        return null;
+    public void addEntry(Object product) {
+        updateFromFile();
+        employees.add((Employee) product);
+        writeToFile();
     }
 
     @Override
-    public Boolean removeByID(Integer id) {
-        return false;
+    public void removeByID(String id) {
+        updateFromFile();
+        writeToFile();
     }
 
     @Override
-    public Boolean editEntry(Integer id, Object product) {
-        return false;
+    public void editEntry(String id, Object product) {
+        updateFromFile();
+        int length = employees.size();
+        for (int i = 0; i < length; i++) {
+            if (id.equals(employees.get(i).getEmployeeId())) {
+                employees.set(i, (Employee) product);
+            }
+        }
+        writeToFile();
     }
 }
 

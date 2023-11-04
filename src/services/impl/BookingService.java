@@ -1,5 +1,6 @@
 package services.impl;
 
+import model.Employee;
 import services.IBookingService;
 
 public class BookingService implements IBookingService {
@@ -14,7 +15,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public void editEntry(String id) {
+    public void editEntry(String id, Employee editedEmployee) {
 
     }
 

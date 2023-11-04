@@ -1,5 +1,6 @@
 package services.impl;
 
+import model.Employee;
 import services.ICustomerService;
 
 public class CustomerService implements ICustomerService {
@@ -14,7 +15,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void editEntry(String id) {
+    public void editEntry(String id, Employee editedEmployee) {
 
     }
 

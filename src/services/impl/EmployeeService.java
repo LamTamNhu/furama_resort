@@ -4,8 +4,6 @@ import model.Employee;
 import repository.impl.EmployeeRepository;
 import services.IEmployeeService;
 
-import java.util.List;
-
 public class EmployeeService implements IEmployeeService {
     EmployeeRepository repository = new EmployeeRepository();
 
@@ -17,11 +15,12 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void addEntry(Object entry) {
+        repository.addEntry(entry);
     }
 
     @Override
-    public void editEntry(String id) {
-
+    public void editEntry(String id, Employee editedEmployee) {
+        repository.editEntry(id, editedEmployee);
     }
 
     @Override
@@ -31,7 +30,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Object findById(String id) {
-        return null;
+        return repository.findById(id);
     }
 
     @Override

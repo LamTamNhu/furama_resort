@@ -47,7 +47,6 @@ public class InputValidator {
         final int AGE_REQUIREMENT = 18;
         String[] formattedBirthday;
         formattedBirthday = birthdayString.split("[/-]");
-        System.out.println(Arrays.toString(formattedBirthday));
         int day = Integer.parseInt(formattedBirthday[0]);
         int month = Integer.parseInt(formattedBirthday[1]);
         int year = Integer.parseInt(formattedBirthday[2]);

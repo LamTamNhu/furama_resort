@@ -15,7 +15,7 @@ public class InputInformation {
 
     public static Employee inputEmployeeInfo() {
         Person basicPersonalInfo = inputBasicPersonalInfo();
-        String employeeId = employeeIdInput();
+        String employeeId = inputEmployeeIdToAdd();
         Qualification qualification = qualificationInput();
         Position position = positionInput();
         Double salary = salaryInput();
@@ -94,11 +94,11 @@ public class InputInformation {
         } while (true);
     }
 
-    private static String employeeIdInput() {
+    private static String inputEmployeeIdToAdd() {
         String employeeId;
         do {
             System.out.print("Enter employee ID (NV-YYYY): ");
-            employeeId = scanner.nextLine();
+            employeeId = scanner.nextLine().toUpperCase();
             if (InputValidator.checkEmployeeId(employeeId)) {
                 if (employeeController.findById(employeeId) != null) {
                     System.out.println("This ID already exist, try again!");
@@ -205,6 +205,23 @@ public class InputInformation {
                 return name;
             } else {
                 System.out.println("Name should only be words with proper capitalization, please try again!");
+            }
+        } while (true);
+    }
+
+    public static String inputEmployeeIdToEdit() {
+        String employeeId;
+        do {
+            System.out.print("Enter employee ID (NV-YYYY): ");
+            employeeId = scanner.nextLine().toUpperCase();
+            if (InputValidator.checkEmployeeId(employeeId)) {
+                if (employeeController.findById(employeeId) != null) {
+                    return employeeId;
+                } else {
+                    System.out.println("Can't find any employee with this ID, try again!");
+                }
+            } else {
+                System.out.println("Invalid ID format, please try again!");
             }
         } while (true);
     }

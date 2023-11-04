@@ -18,4 +18,8 @@ public class EmployeeController {
     public void addEmployee(Employee employeeToAdd) {
         employeeService.addEntry(employeeToAdd);
     }
+
+    public void editEmployee(String idToEdit, Employee editedEmployee) {
+        employeeService.editEntry(idToEdit,editedEmployee);
+    }
 }

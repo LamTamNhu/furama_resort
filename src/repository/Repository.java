@@ -9,10 +9,10 @@ public interface Repository {
 
     Object findByName(String productName);
 
-    Boolean addEntry(Object product);
+    void addEntry(Object product);
 
-    Boolean removeByID(Integer id);
+    void removeByID(String id);
 
-    Boolean editEntry(Integer id, Object product);
+    void editEntry(String id, Object product);
 }
 

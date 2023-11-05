@@ -1,28 +1,23 @@
 package repository.impl;
 
 import model.Customer;
-import repository.IContactRepository;
 import repository.ICustomerRepository;
-import utils.CsvFileReader;
-import utils.CsvFileWriter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository implements ICustomerRepository {
-    private static final List<Customer>
-    private final String PATH="src/controller/CustomerController.java";
+    private static final List<Customer> customers = new ArrayList<>();
+    private final String PATH = "src/controller/CustomerController.java";
+    private final String SEPARATOR = ",";
+
     private void updateFromFile() {
-        List<String> rawCsvFromFile = CsvFileReader.readObjectFromFile(PATH);
-        if (rawCsvFromFile == null) {
-            System.out.println("Can't update from empty file.");
-            return;
-        }
-        employees = convertCsvFormatToList(rawCsvFromFile);
+
     }
 
     private void writeToFile() {
-        CsvFileWriter.writeObjectToFile(convertListToCsvFormat(), PATH);
     }
+
     @Override
     public Object getAll() {
         return null;

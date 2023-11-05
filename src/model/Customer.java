@@ -1,8 +1,5 @@
 package model;
 
-import utils.enums.CustomerTier;
-import utils.enums.Gender;
-
 public class Customer extends Person {
     private String customerId;
     private CustomerTier customerTier;
@@ -27,5 +24,61 @@ public class Customer extends Person {
         this.customerId = customerId;
         this.customerTier = customerTier;
         this.address = address;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public CustomerTier getCustomerTier() {
+        return customerTier;
+    }
+
+    public void setCustomerTier(CustomerTier customerTier) {
+        this.customerTier = customerTier;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String convertAttributesToCsvFormat() {
+        return super.convertAttributesToCsvFormat() + getSEPARATOR() + customerId + getSEPARATOR() +
+                customerTier + getSEPARATOR() + address;
+    }
+
+    @Override
+    public void setAttributesFromCsvFormat(String csvString) {
+        super.setAttributesFromCsvFormat(csvString);
+        String[] attributeList = csvString.split(getSEPARATOR());
+        customerId = attributeList[6];
+        customerTier = CustomerTier.valueOf(attributeList[7]);
+        address = attributeList[8];
+    }
+
+    @Override
+    public String toString() {
+        return
+                "customerId='" + customerId + '\'' +
+                        super.toString() +
+                        ", customerTier=" + customerTier +
+                        ", address='" + address + '\'';
+    }
+
+    public enum CustomerTier {
+        DIAMOND,
+        PLATINUM,
+        GOLD,
+        SILVER,
+        MEMBER
     }
 }

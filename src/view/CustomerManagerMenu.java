@@ -15,7 +15,7 @@ public class CustomerManagerMenu {
     private static final CustomerController customerController = new CustomerController();
     private final Scanner scanner = new Scanner(System.in);
 
-    public void displayEmployeeMenu() {
+    public void displayCustomerMenu() {
         final String CUSTOMER_MENU = "--------Customer Menu--------\n" +
                 "1.\tDisplay list customers\n" +
                 "2.\tAdd new customer\n" +
@@ -35,11 +35,11 @@ public class CustomerManagerMenu {
                         System.out.println(e);
                     }
                     break;
-//                case 2:
-//                    Employee employeeToAdd = InputInformation.inputEmployeeInfo();
-//                    customerController.addEmployee(employeeToAdd);
-//                    System.out.println("Adding employee succeed!");
-//                    break;
+                case 2:
+                    Customer customerToAdd = InputInformation.inputCustomerInfo();
+                    customerController.a(customerToAdd);
+                    System.out.println("Adding customer succeed!");
+                    break;
 //                case 3:
 //                    String idToEdit = InputInformation.inputEmployeeIdAlreadyInList();
 //                    Employee editedEmployee = InputInformation.inputEmployeeInfo();

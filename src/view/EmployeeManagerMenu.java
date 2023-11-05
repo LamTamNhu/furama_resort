@@ -1,6 +1,7 @@
 package view;
 
 import controller.EmployeeController;
+import controller.PersonController;
 import model.Employee;
 import utils.InputInformation;
 
@@ -10,7 +11,7 @@ import java.util.Scanner;
 import static utils.MenuInput.inputNumForMenu;
 
 public class EmployeeManagerMenu {
-    private static final EmployeeController employeeController = new EmployeeController();
+    private static final PersonController employeeController = new EmployeeController();
     private final Scanner scanner = new Scanner(System.in);
 
     public void displayEmployeeMenu() {
@@ -35,18 +36,19 @@ public class EmployeeManagerMenu {
                     break;
                 case 2:
                     Employee employeeToAdd = InputInformation.inputEmployeeInfo();
-                    employeeController.addEmployee(employeeToAdd);
+                    employeeController.addEntry(employeeToAdd);
                     System.out.println("Adding employee succeed!");
                     break;
                 case 3:
                     String idToEdit = InputInformation.inputEmployeeIdAlreadyInList();
                     Employee editedEmployee = InputInformation.inputEmployeeInfo();
-                    employeeController.editEmployee(idToEdit, editedEmployee);
-                    System.out.println("Edit succeed.");
+                    employeeController.editEntry(idToEdit, editedEmployee);
+                    System.out.println("Edit succeed!");
                     break;
                 case 4:
                     String idToDelete = InputInformation.inputEmployeeIdAlreadyInList();
-                    employeeController.removeEmployee(idToDelete);
+                    employeeController.removeEntry(idToDelete);
+                    System.out.println("Delete succeed!");
                     break;
                 case 5:
                     String nameToSearch = InputInformation.nameInput();
@@ -56,7 +58,7 @@ public class EmployeeManagerMenu {
                         System.out.println("No match found!");
                         break;
                     }
-                    System.out.println("Found: " + length + " employees match the name.");
+                    System.out.println("Found: " + length + " match the name.");
                     for (Employee e : searchResult) {
                         System.out.println(e);
                     }

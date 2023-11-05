@@ -1,11 +1,8 @@
 package model;
 
 
-import utils.enums.Gender;
-
-import java.io.Serializable;
-
-public class Person implements Serializable {
+public class Person {
+    private final String SEPARATOR = ",";
     private String name;
     private String birthDate;
     private Gender gender;
@@ -47,10 +44,10 @@ public class Person implements Serializable {
 
     public void setGender(String gender) {
         switch (gender) {
-            case "M":
+            case "MALE":
                 this.gender = Gender.MALE;
                 break;
-            case "F":
+            case "FEMALE":
                 this.gender = Gender.FEMALE;
                 break;
             default:
@@ -82,14 +79,39 @@ public class Person implements Serializable {
         this.email = email;
     }
 
+    public String getSEPARATOR() {
+        return SEPARATOR;
+    }
+
+    public String convertAttributesToCsvFormat() {
+
+        return name + SEPARATOR + birthDate + SEPARATOR + gender + SEPARATOR + idNumber
+                + SEPARATOR + phoneNumber + SEPARATOR + email;
+    }
+
+    public void setAttributesFromCsvFormat(String csvString) {
+        String[] attributeList = csvString.split(SEPARATOR);
+        name = attributeList[0];
+        birthDate = attributeList[1];
+        gender = Gender.valueOf(attributeList[2]);
+        idNumber = attributeList[3];
+        phoneNumber = attributeList[4];
+        email = attributeList[5];
+    }
+
     @Override
     public String toString() {
         return
                 "name='" + name + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", gender='" + gender + '\'' +
-                ", idNumber='" + idNumber + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email;
+                        ", birthDate='" + birthDate + '\'' +
+                        ", gender='" + gender + '\'' +
+                        ", idNumber='" + idNumber + '\'' +
+                        ", phoneNumber='" + phoneNumber + '\'' +
+                        ", email='" + email;
+    }
+
+    public enum Gender {
+        MALE,
+        FEMALE
     }
 }

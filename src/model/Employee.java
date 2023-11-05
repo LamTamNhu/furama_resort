@@ -1,9 +1,5 @@
 package model;
 
-import utils.enums.Gender;
-import utils.enums.Position;
-import utils.enums.Qualification;
-
 public class Employee extends Person {
     private String employeeId;
     private Qualification qualification;
@@ -70,11 +66,43 @@ public class Employee extends Person {
     }
 
     @Override
+    public String convertAttributesToCsvFormat() {
+        return super.convertAttributesToCsvFormat() + getSEPARATOR() + employeeId + getSEPARATOR() + qualification +
+                getSEPARATOR() + position + getSEPARATOR() + salary;
+    }
+
+    @Override
+    public void setAttributesFromCsvFormat(String csvString) {
+        super.setAttributesFromCsvFormat(csvString);
+        String[] attributeList = csvString.split(getSEPARATOR());
+        employeeId = attributeList[6];
+        qualification = Qualification.valueOf(attributeList[7]);
+        position = Position.valueOf(attributeList[8]);
+        salary = Double.valueOf(attributeList[9]);
+    }
+
+    @Override
     public String toString() {
         return "employeeId='" + employeeId + '\'' + ", " +
                 super.toString() +
                 ", qualification='" + qualification + '\'' +
                 ", position='" + position + '\'' +
                 ", salary=" + salary;
+    }
+
+    public enum Position {
+        RECEPTIONIST,
+        SERVER,
+        EXPERT,
+        SUPERVISOR,
+        MANAGER,
+        DIRECTOR
+    }
+
+    public enum Qualification {
+        INTERMEDIATE,
+        COLLEGE,
+        UNIVERSITY,
+        POSTGRADUATE
     }
 }

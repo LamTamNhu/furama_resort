@@ -4,71 +4,35 @@ import model.Employee;
 import repository.IEmployeeRepository;
 import utils.CsvFileReader;
 import utils.CsvFileWriter;
-import utils.enums.Gender;
-import utils.enums.Position;
-import utils.enums.Qualification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository implements IEmployeeRepository {
-    private static List<Employee> employees = new ArrayList<>();
+    private static final List<Employee> employees = new ArrayList<>();
     private final String PATH = "src/data/employee.csv";
-    private final String SEPARATOR = ",";
 
-    private List<String> convertListToCsvFormat() {
-
-        List<String> convertedList = new ArrayList<>();
-        StringBuilder employeeToString = new StringBuilder();
-        for (Employee e : employees) {
-            employeeToString.setLength(0);
-            employeeToString.append(e.getName()).append(SEPARATOR);
-            employeeToString.append(e.getBirthDate()).append(SEPARATOR);
-            employeeToString.append(e.getGender()).append(SEPARATOR);
-            employeeToString.append(e.getIdNumber()).append(SEPARATOR);
-            employeeToString.append(e.getPhoneNumber()).append(SEPARATOR);
-            employeeToString.append(e.getEmail()).append(SEPARATOR);
-            employeeToString.append(e.getEmployeeId()).append(SEPARATOR);
-            employeeToString.append(e.getQualification()).append(SEPARATOR);
-            employeeToString.append(e.getPosition()).append(SEPARATOR);
-            employeeToString.append(e.getSalary());
-
-            convertedList.add(String.valueOf(employeeToString));
-        }
-        return convertedList;
-    }
-
-    private List<Employee> convertCsvFormatToList(List<String> rawListFromCsv) {
-        List<Employee> updatedList = new ArrayList<>();
-        String[] parsedLine;
-        for (String line : rawListFromCsv) {
-            parsedLine = line.split(SEPARATOR);
-            String name = parsedLine[0];
-            String birthday = parsedLine[1];
-            Gender gender = Gender.valueOf(parsedLine[2]);
-            String idNumber = parsedLine[3];
-            String phoneNumber = parsedLine[4];
-            String email = parsedLine[5];
-            String employeeId = parsedLine[6];
-            Qualification qualification = Qualification.valueOf(parsedLine[7]);
-            Position position = Position.valueOf(parsedLine[8]);
-            Double salary = Double.valueOf(parsedLine[9]);
-            updatedList.add(new Employee(name, birthday, gender, idNumber, phoneNumber, email, employeeId, qualification, position, salary));
-        }
-        return updatedList;
-    }
 
     private void updateFromFile() {
-        List<String> rawCsvFromFile = CsvFileReader.readObjectFromFile(PATH);
-        if (rawCsvFromFile == null) {
-            System.out.println("Can't update from empty file.");
+        List<String> rawCsvList = CsvFileReader.readObjectFromFile(PATH);
+        if (rawCsvList == null) {
+            System.out.println("Reading from empty csv file.");
             return;
         }
-        employees = convertCsvFormatToList(rawCsvFromFile);
+        employees.clear();
+        for (String line : rawCsvList) {
+            Employee employeeToAdd = new Employee();
+            employeeToAdd.setAttributesFromCsvFormat(line);
+            employees.add(employeeToAdd);
+        }
     }
 
     private void writeToFile() {
-        CsvFileWriter.writeObjectToFile(convertListToCsvFormat(), PATH);
+        List<String> listToWrite = new ArrayList<>();
+        for (Employee e : employees) {
+            listToWrite.add(e.convertAttributesToCsvFormat());
+        }
+        CsvFileWriter.writeObjectToFile(listToWrite, PATH);
     }
 
 
@@ -122,6 +86,10 @@ public class EmployeeRepository implements IEmployeeRepository {
             }
         }
         writeToFile();
+    }
+
+    public String getPATH() {
+        return PATH;
     }
 
     @Override

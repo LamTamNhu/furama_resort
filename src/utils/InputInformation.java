@@ -1,23 +1,31 @@
 package utils;
 
 import controller.EmployeeController;
+import controller.PersonController;
+import model.Customer;
 import model.Employee;
 import model.Person;
-import utils.enums.Gender;
-import utils.enums.Position;
-import utils.enums.Qualification;
 
 import java.util.Scanner;
 
 public class InputInformation {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final EmployeeController employeeController = new EmployeeController();
+    private static final PersonController employeeController = new EmployeeController();
+
+    public static Customer inputCustomerInfo() {
+        Person basicPersonalInfo=inputBasicPersonalInfo();
+        String customerId;
+        Customer.CustomerTier customerTier;
+        String address;
+
+        return new Customer(basicPersonalInfo,customerId,customerTier,address);
+    }
 
     public static Employee inputEmployeeInfo() {
         Person basicPersonalInfo = inputBasicPersonalInfo();
         String employeeId = inputEmployeeIdNotInList();
-        Qualification qualification = qualificationInput();
-        Position position = positionInput();
+        Employee.Qualification qualification = qualificationInput();
+        Employee.Position position = positionInput();
         Double salary = salaryInput();
         return new Employee(basicPersonalInfo, employeeId, qualification, position, salary);
     }
@@ -40,7 +48,7 @@ public class InputInformation {
         } while (true);
     }
 
-    private static Position positionInput() {
+    private static Employee.Position positionInput() {
         int inputNum;
         do {
             System.out.println("Choose position:\n" +
@@ -53,24 +61,24 @@ public class InputInformation {
             inputNum = MenuInput.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
-                    return Position.RECEPTIONIST;
+                    return Employee.Position.RECEPTIONIST;
                 case 2:
-                    return Position.SERVER;
+                    return Employee.Position.SERVER;
                 case 3:
-                    return Position.EXPERT;
+                    return Employee.Position.EXPERT;
                 case 4:
-                    return Position.SUPERVISOR;
+                    return Employee.Position.SUPERVISOR;
                 case 5:
-                    return Position.MANAGER;
+                    return Employee.Position.MANAGER;
                 case 6:
-                    return Position.DIRECTOR;
+                    return Employee.Position.DIRECTOR;
                 default:
                     System.out.println("Invalid choice, please try again!");
             }
         } while (true);
     }
 
-    private static Qualification qualificationInput() {
+    private static Employee.Qualification qualificationInput() {
         int inputNum;
         do {
             System.out.println("Choose qualification:\n" +
@@ -81,13 +89,13 @@ public class InputInformation {
             inputNum = MenuInput.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
-                    return Qualification.INTERMEDIATE;
+                    return Employee.Qualification.INTERMEDIATE;
                 case 2:
-                    return Qualification.COLLEGE;
+                    return Employee.Qualification.COLLEGE;
                 case 3:
-                    return Qualification.UNIVERSITY;
+                    return Employee.Qualification.UNIVERSITY;
                 case 4:
-                    return Qualification.POSTGRADUATE;
+                    return Employee.Qualification.POSTGRADUATE;
                 default:
                     System.out.println("Invalid choice, please try again!");
             }
@@ -114,7 +122,7 @@ public class InputInformation {
     public static Person inputBasicPersonalInfo() {
         String name = nameInput();
         String birthdate = birthdateInput();
-        Gender gender = genderInput();
+        Person.Gender gender = genderInput();
         String idNumber = idNumberInput();
         String phoneNumber = phoneNumberInput();
         String email = emailInput();
@@ -177,7 +185,7 @@ public class InputInformation {
         } while (true);
     }
 
-    private static Gender genderInput() {
+    private static Person.Gender genderInput() {
         String gender;
         do {
             System.out.print("Enter gender (M/F): ");
@@ -189,7 +197,7 @@ public class InputInformation {
                 gender = "FEMALE";
             }
             try {
-                return Gender.valueOf(gender);
+                return Person.Gender.valueOf(gender);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid gender input, try again!");
             }
@@ -225,4 +233,6 @@ public class InputInformation {
             }
         } while (true);
     }
+
+
 }

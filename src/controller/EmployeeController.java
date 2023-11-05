@@ -4,29 +4,34 @@ import model.Employee;
 import services.IEmployeeService;
 import services.impl.EmployeeService;
 
-public class EmployeeController {
-    IEmployeeService employeeService = new EmployeeService();
+public class EmployeeController extends PersonController {
 
+    @Override
     public Object getAll() {
         return employeeService.getAll();
     }
 
+    @Override
     public Object findById(String employeeId) {
         return employeeService.findById(employeeId);
     }
 
-    public void addEmployee(Employee employeeToAdd) {
+    @Override
+    public void addEntry(Employee employeeToAdd) {
         employeeService.addEntry(employeeToAdd);
     }
 
-    public void editEmployee(String idToEdit, Employee editedEmployee) {
+    @Override
+    public void editEntry(String idToEdit, Employee editedEmployee) {
         employeeService.editEntry(idToEdit,editedEmployee);
     }
 
-    public void removeEmployee(String idToDelete) {
+    @Override
+    public void removeEntry(String idToDelete) {
         employeeService.removeEntry(idToDelete);
     }
 
+    @Override
     public Object findByName(String employeeName) {
         return employeeService.findByName(employeeName);
     }

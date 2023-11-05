@@ -43,6 +43,7 @@ public class MainMenu {
 
     private static void displayMainMenu() {
         EmployeeManagerMenu employeeManagerMenu = new EmployeeManagerMenu();
+        CustomerManagerMenu customerManagerMenu = new CustomerManagerMenu();
         Integer menuInput;
         do {
             System.out.print(MAIN_MENU);
@@ -55,7 +56,9 @@ public class MainMenu {
                     employeeManagerMenu.displayEmployeeMenu();
                     break;
                 case 2:
+                    customerManagerMenu.displayCustomerMenu();
                     break;
+
                 case 3:
                     break;
                 case 4:

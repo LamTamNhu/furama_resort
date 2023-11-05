@@ -18,13 +18,7 @@ public class MainMenu {
             "6.\tExit\n" +
             "Enter a number: ";
 
-    private static final String CUSTOMER_MENU = "--------Customer Menu--------\n" +
-            "1\tDisplay list employees\n" +
-            "2\tAdd new employee\n" +
-            "3\tEdit employee\n" +
-            "4\tDelete employee\n" +
-            "5\tSearch by name employee\n" +
-            "6\tReturn main menu\n";
+
     private static final String FACILITY_MENU = "--------Facility Menu--------\n" +
             "1\tDisplay list facility\n" +
             "2\tAdd new facility\n" +

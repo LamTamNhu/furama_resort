@@ -15,7 +15,7 @@ public class InputInformation {
 
     public static Employee inputEmployeeInfo() {
         Person basicPersonalInfo = inputBasicPersonalInfo();
-        String employeeId = inputEmployeeIdToAdd();
+        String employeeId = inputEmployeeIdNotInList();
         Qualification qualification = qualificationInput();
         Position position = positionInput();
         Double salary = salaryInput();
@@ -94,7 +94,7 @@ public class InputInformation {
         } while (true);
     }
 
-    private static String inputEmployeeIdToAdd() {
+    private static String inputEmployeeIdNotInList() {
         String employeeId;
         do {
             System.out.print("Enter employee ID (NV-YYYY): ");
@@ -196,7 +196,7 @@ public class InputInformation {
         } while (true);
     }
 
-    private static String nameInput() {
+    public static String nameInput() {
         String name;
         do {
             System.out.print("Enter name: ");
@@ -209,7 +209,7 @@ public class InputInformation {
         } while (true);
     }
 
-    public static String inputEmployeeIdToEdit() {
+    public static String inputEmployeeIdAlreadyInList() {
         String employeeId;
         do {
             System.out.print("Enter employee ID (NV-YYYY): ");

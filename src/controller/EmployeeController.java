@@ -22,4 +22,12 @@ public class EmployeeController {
     public void editEmployee(String idToEdit, Employee editedEmployee) {
         employeeService.editEntry(idToEdit,editedEmployee);
     }
+
+    public void removeEmployee(String idToDelete) {
+        employeeService.removeEntry(idToDelete);
+    }
+
+    public Object findByName(String employeeName) {
+        return employeeService.findByName(employeeName);
+    }
 }

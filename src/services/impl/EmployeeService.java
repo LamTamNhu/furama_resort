@@ -25,7 +25,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void removeEntry(String id) {
-
+        repository.removeByID(id);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public Object findByName(String name) {
-        return null;
+        return repository.findByName(name);
     }
 }

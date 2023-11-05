@@ -90,31 +90,47 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     @Override
-    public Object findByName(String productName) {
+    public Object findByName(String employeeName) {
         updateFromFile();
-        return null;
+        List<Employee> result = new ArrayList<>();
+        employeeName = employeeName.toUpperCase();
+        String employeeNameInList;
+        for (Employee e : employees) {
+            employeeNameInList = e.getName().toUpperCase();
+            if (employeeNameInList.contains(employeeName)) {
+                result.add(e);
+            }
+        }
+        return result;
     }
 
     @Override
-    public void addEntry(Object product) {
+    public void addEntry(Object employee) {
         updateFromFile();
-        employees.add((Employee) product);
+        employees.add((Employee) employee);
         writeToFile();
     }
 
     @Override
     public void removeByID(String id) {
         updateFromFile();
+        int length = employees.size();
+        for (int i = 0; i < length; i++) {
+            if (id.equals(employees.get(i).getEmployeeId())) {
+                employees.remove(i);
+                break;
+            }
+        }
         writeToFile();
     }
 
     @Override
-    public void editEntry(String id, Object product) {
+    public void editEntry(String id, Object employee) {
         updateFromFile();
         int length = employees.size();
         for (int i = 0; i < length; i++) {
             if (id.equals(employees.get(i).getEmployeeId())) {
-                employees.set(i, (Employee) product);
+                employees.set(i, (Employee) employee);
             }
         }
         writeToFile();

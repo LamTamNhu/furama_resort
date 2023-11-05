@@ -13,10 +13,10 @@ import java.util.List;
 
 public class EmployeeRepository implements IEmployeeRepository {
     private static List<Employee> employees = new ArrayList<>();
-    private static final String PATH = "src/data/EmployeeList.csv";
-    private static final String SEPARATOR = ",";
+    private final String PATH = "src/data/employee.csv";
+    private final String SEPARATOR = ",";
 
-    private static List<String> convertListToCsvFormat() {
+    private List<String> convertListToCsvFormat() {
 
         List<String> convertedList = new ArrayList<>();
         StringBuilder employeeToString = new StringBuilder();
@@ -38,7 +38,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         return convertedList;
     }
 
-    public static List<Employee> convertCsvFormatToList(List<String> rawListFromCsv) {
+    private List<Employee> convertCsvFormatToList(List<String> rawListFromCsv) {
         List<Employee> updatedList = new ArrayList<>();
         String[] parsedLine;
         for (String line : rawListFromCsv) {
@@ -58,7 +58,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         return updatedList;
     }
 
-    private static void updateFromFile() {
+    private void updateFromFile() {
         List<String> rawCsvFromFile = CsvFileReader.readObjectFromFile(PATH);
         if (rawCsvFromFile == null) {
             System.out.println("Can't update from empty file.");
@@ -67,7 +67,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         employees = convertCsvFormatToList(rawCsvFromFile);
     }
 
-    private static void writeToFile() {
+    private void writeToFile() {
         CsvFileWriter.writeObjectToFile(convertListToCsvFormat(), PATH);
     }
 

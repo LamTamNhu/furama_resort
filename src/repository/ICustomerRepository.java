@@ -1,4 +1,4 @@
 package repository;
 
-public interface ICustomerRepository {
+public interface ICustomerRepository extends Repository {
 }

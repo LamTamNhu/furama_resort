@@ -1,12 +1,15 @@
 package services.impl;
 
 import model.Employee;
+import repository.impl.CustomerRepository;
 import services.ICustomerService;
 
 public class CustomerService implements ICustomerService {
+    private final CustomerRepository repository = new CustomerRepository();
+
     @Override
     public Object getAll() {
-        return null;
+        return repository.getAll();
     }
 
     @Override

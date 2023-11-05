@@ -25,9 +25,8 @@ public class InputValidator {
         return id.matches(REGEX);
     }
 
-    public static Boolean checkEmployeeId(String employeeId) {
-        final String REGEX = "^NV-\\d{4}$";
-        return employeeId.matches(REGEX);
+    public static Boolean checkDatabaseId(String id, String REGEX) {
+        return id.matches(REGEX);
     }
 
     public static Boolean checkName(String name) {

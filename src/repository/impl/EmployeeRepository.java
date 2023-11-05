@@ -54,14 +54,14 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     @Override
-    public Object findByName(String employeeName) {
+    public Object findByName(String name) {
         updateFromFile();
         List<Employee> result = new ArrayList<>();
-        employeeName = employeeName.toUpperCase();
+        name = name.toUpperCase();
         String employeeNameInList;
         for (Employee e : employees) {
             employeeNameInList = e.getName().toUpperCase();
-            if (employeeNameInList.contains(employeeName)) {
+            if (employeeNameInList.contains(name)) {
                 result.add(e);
             }
         }
@@ -69,9 +69,9 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     @Override
-    public void addEntry(Object employee) {
+    public void addEntry(Object entry) {
         updateFromFile();
-        employees.add((Employee) employee);
+        employees.add((Employee) entry);
         writeToFile();
     }
 
@@ -88,17 +88,13 @@ public class EmployeeRepository implements IEmployeeRepository {
         writeToFile();
     }
 
-    public String getPATH() {
-        return PATH;
-    }
-
     @Override
-    public void editEntry(String id, Object employee) {
+    public void editEntry(String id, Object entry) {
         updateFromFile();
         int length = employees.size();
         for (int i = 0; i < length; i++) {
             if (id.equals(employees.get(i).getEmployeeId())) {
-                employees.set(i, (Employee) employee);
+                employees.set(i, (Employee) entry);
             }
         }
         writeToFile();

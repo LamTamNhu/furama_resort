@@ -37,7 +37,7 @@ public class CustomerManagerMenu {
                     break;
                 case 2:
                     Customer customerToAdd = InputInformation.inputCustomerInfo();
-                    customerController.a(customerToAdd);
+                    customerController.addEntry(customerToAdd);
                     System.out.println("Adding customer succeed!");
                     break;
 //                case 3:

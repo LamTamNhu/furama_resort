@@ -40,13 +40,13 @@ public class EmployeeManagerMenu {
                     System.out.println("Adding employee succeed!");
                     break;
                 case 3:
-                    String idToEdit = InputInformation.inputEmployeeIdAlreadyInList();
+                    String idToEdit = InputInformation.inputDatabaseIdAlreadyInList(employeeController, "^NV-\\d{4}$");
                     Employee editedEmployee = InputInformation.inputEmployeeInfo();
                     employeeController.editEntry(idToEdit, editedEmployee);
                     System.out.println("Edit succeed!");
                     break;
                 case 4:
-                    String idToDelete = InputInformation.inputEmployeeIdAlreadyInList();
+                    String idToDelete = InputInformation.inputDatabaseIdAlreadyInList(employeeController, "^NV-\\d{4}$");
                     employeeController.removeEntry(idToDelete);
                     System.out.println("Delete succeed!");
                     break;

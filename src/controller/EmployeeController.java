@@ -1,10 +1,11 @@
 package controller;
 
 import model.Employee;
-import services.IEmployeeService;
+import services.Service;
 import services.impl.EmployeeService;
 
 public class EmployeeController extends PersonController {
+    private final Service employeeService = new EmployeeService();
 
     @Override
     public Object getAll() {
@@ -17,13 +18,13 @@ public class EmployeeController extends PersonController {
     }
 
     @Override
-    public void addEntry(Employee employeeToAdd) {
+    public void addEntry(Object employeeToAdd) {
         employeeService.addEntry(employeeToAdd);
     }
 
     @Override
-    public void editEntry(String idToEdit, Employee editedEmployee) {
-        employeeService.editEntry(idToEdit,editedEmployee);
+    public void editEntry(String idToEdit, Object editedEmployee) {
+        employeeService.editEntry(idToEdit, editedEmployee);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package utils;
 
+import controller.CustomerController;
 import controller.EmployeeController;
 import controller.PersonController;
 import model.Customer;
@@ -10,20 +11,57 @@ import java.util.Scanner;
 
 public class InputInformation {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final PersonController employeeController = new EmployeeController();
 
     public static Customer inputCustomerInfo() {
-        Person basicPersonalInfo=inputBasicPersonalInfo();
-        String customerId;
-        Customer.CustomerTier customerTier;
-        String address;
+        PersonController customerController = new CustomerController();
+        final String ID_REGEX = "^KH-\\d{4}$";
 
-        return new Customer(basicPersonalInfo,customerId,customerTier,address);
+        Person basicPersonalInfo = inputBasicPersonalInfo();
+        String customerId = inputDatabaseIdNotInList(customerController, ID_REGEX);
+        Customer.CustomerTier customerTier = customerTierInput();
+        String address = addressInput();
+
+        return new Customer(basicPersonalInfo, customerId, customerTier, address);
+    }
+
+    private static String addressInput() {
+        System.out.print("Enter address: ");
+        return scanner.nextLine();
+    }
+
+    private static Customer.CustomerTier customerTierInput() {
+        int inputNum;
+        do {
+            System.out.println("Choose customer tier:\n" +
+                    "1. DIAMOND\n" +
+                    "2. PLATINUM\n" +
+                    "3. GOLD\n" +
+                    "4. SILVER\n" +
+                    "5. MEMBER");
+            inputNum = MenuInput.inputNumForMenu(scanner.nextLine());
+            switch (inputNum) {
+                case 1:
+                    return Customer.CustomerTier.DIAMOND;
+                case 2:
+                    return Customer.CustomerTier.PLATINUM;
+                case 3:
+                    return Customer.CustomerTier.GOLD;
+                case 4:
+                    return Customer.CustomerTier.SILVER;
+                case 5:
+                    return Customer.CustomerTier.MEMBER;
+                default:
+                    System.out.println("Invalid choice, please try again!");
+            }
+        } while (true);
     }
 
     public static Employee inputEmployeeInfo() {
+        PersonController employeeController = new EmployeeController();
+        final String ID_REGEX = "^NV-\\d{4}$";
+
         Person basicPersonalInfo = inputBasicPersonalInfo();
-        String employeeId = inputEmployeeIdNotInList();
+        String employeeId = inputDatabaseIdNotInList(employeeController, ID_REGEX);
         Employee.Qualification qualification = qualificationInput();
         Employee.Position position = positionInput();
         Double salary = salaryInput();
@@ -102,16 +140,16 @@ public class InputInformation {
         } while (true);
     }
 
-    private static String inputEmployeeIdNotInList() {
-        String employeeId;
+    private static String inputDatabaseIdNotInList(PersonController controller, String REGEX) {
+        String id;
         do {
-            System.out.print("Enter employee ID (NV-YYYY): ");
-            employeeId = scanner.nextLine().toUpperCase();
-            if (InputValidator.checkEmployeeId(employeeId)) {
-                if (employeeController.findById(employeeId) != null) {
-                    System.out.println("This ID already exist, try again!");
+            System.out.print("Enter entry ID: ");
+            id = scanner.nextLine().toUpperCase();
+            if (InputValidator.checkDatabaseId(id, REGEX)) {
+                if (controller.findById(id) != null) {
+                    System.out.println("This ID already exist, please try again!");
                 } else {
-                    return employeeId;
+                    return id;
                 }
             } else {
                 System.out.println("Invalid ID format, please try again!");
@@ -217,16 +255,16 @@ public class InputInformation {
         } while (true);
     }
 
-    public static String inputEmployeeIdAlreadyInList() {
-        String employeeId;
+    public static String inputDatabaseIdAlreadyInList(PersonController controller, String REGEX) {
+        String id;
         do {
-            System.out.print("Enter employee ID (NV-YYYY): ");
-            employeeId = scanner.nextLine().toUpperCase();
-            if (InputValidator.checkEmployeeId(employeeId)) {
-                if (employeeController.findById(employeeId) != null) {
-                    return employeeId;
+            System.out.print("Enter entry ID: ");
+            id = scanner.nextLine().toUpperCase();
+            if (InputValidator.checkDatabaseId(id, REGEX)) {
+                if (controller.findById(id) != null) {
+                    return id;
                 } else {
-                    System.out.println("Can't find any employee with this ID, try again!");
+                    System.out.println("Can't find any entry with this ID, try again!");
                 }
             } else {
                 System.out.println("Invalid ID format, please try again!");

@@ -1,11 +1,10 @@
 package controller;
 
-import model.Employee;
-import services.ICustomerService;
+import services.Service;
 import services.impl.CustomerService;
 
 public class CustomerController extends PersonController {
-    private final ICustomerService customerService = new CustomerService();
+    private final Service customerService = new CustomerService();
 
     @Override
     public Object getAll() {
@@ -13,17 +12,17 @@ public class CustomerController extends PersonController {
     }
 
     @Override
-    public Object findById(String employeeId) {
+    public Object findById(String customerId) {
         return null;
     }
 
     @Override
-    public void addEntry(Employee employeeToAdd) {
-
+    public void addEntry(Object customerToAdd) {
+        customerService.addEntry(customerToAdd);
     }
 
     @Override
-    public void editEntry(String idToEdit, Employee editedEmployee) {
+    public void editEntry(String idToEdit, Object editedCustomer) {
 
     }
 
@@ -33,7 +32,7 @@ public class CustomerController extends PersonController {
     }
 
     @Override
-    public Object findByName(String employeeName) {
+    public Object findByName(String name) {
         return null;
     }
 }

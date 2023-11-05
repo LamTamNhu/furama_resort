@@ -1,6 +1,5 @@
 package services.impl;
 
-import model.Employee;
 import repository.impl.EmployeeRepository;
 import services.IEmployeeService;
 
@@ -19,7 +18,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public void editEntry(String id, Employee editedEmployee) {
+    public void editEntry(String id, Object editedEmployee) {
         repository.editEntry(id, editedEmployee);
     }
 

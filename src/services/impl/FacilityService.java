@@ -1,6 +1,5 @@
 package services.impl;
 
-import model.Employee;
 import services.IFacilityService;
 
 public class FacilityService implements IFacilityService {
@@ -15,7 +14,7 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public void editEntry(String id, Employee editedEmployee) {
+    public void editEntry(String id, Object editedEmployee) {
 
     }
 

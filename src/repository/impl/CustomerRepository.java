@@ -2,25 +2,42 @@ package repository.impl;
 
 import model.Customer;
 import repository.ICustomerRepository;
+import utils.CsvFileReader;
+import utils.CsvFileWriter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository implements ICustomerRepository {
     private static final List<Customer> customers = new ArrayList<>();
-    private final String PATH = "src/controller/CustomerController.java";
-    private final String SEPARATOR = ",";
+    private final String PATH = "src/data/customer.csv";
 
     private void updateFromFile() {
-
+        List<String> rawCsvList = CsvFileReader.readObjectFromFile(PATH);
+        if (rawCsvList == null) {
+            System.out.println("List is empty!");
+            return;
+        }
+        customers.clear();
+        for (String line : rawCsvList) {
+            Customer customerToAdd = new Customer();
+            customerToAdd.setAttributesFromCsvFormat(line);
+            customers.add(customerToAdd);
+        }
     }
 
     private void writeToFile() {
+        List<String> listToWrite = new ArrayList<>();
+        for (Customer e : customers) {
+            listToWrite.add(e.convertAttributesToCsvFormat());
+        }
+        CsvFileWriter.writeObjectToFile(listToWrite, PATH);
     }
 
     @Override
     public Object getAll() {
-        return null;
+        updateFromFile();
+        return customers;
     }
 
     @Override
@@ -29,13 +46,15 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Object findByName(String productName) {
+    public Object findByName(String name) {
         return null;
     }
 
     @Override
-    public void addEntry(Object product) {
-
+    public void addEntry(Object entry) {
+        updateFromFile();
+        customers.add((Customer) entry);
+        writeToFile();
     }
 
     @Override
@@ -44,7 +63,7 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public void editEntry(String id, Object product) {
+    public void editEntry(String id, Object entry) {
 
     }
 }

@@ -1,6 +1,5 @@
 package services.impl;
 
-import model.Employee;
 import repository.impl.CustomerRepository;
 import services.ICustomerService;
 
@@ -14,11 +13,11 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void addEntry(Object entry) {
-
+        repository.addEntry(entry);
     }
 
     @Override
-    public void editEntry(String id, Employee editedEmployee) {
+    public void editEntry(String id, Object editedEmployee) {
 
     }
 

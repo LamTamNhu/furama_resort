@@ -2,7 +2,7 @@ package view;
 
 import controller.EmployeeController;
 import controller.PersonController;
-import model.Employee;
+import model.human.Employee;
 import utils.InputInformationHandler;
 
 import java.util.List;

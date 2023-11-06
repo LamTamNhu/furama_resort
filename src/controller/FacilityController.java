@@ -1,6 +1,6 @@
 package controller;
 
-import model.Facility;
+import model.facilities.Facility;
 import services.Service;
 import services.impl.FacilityService;
 

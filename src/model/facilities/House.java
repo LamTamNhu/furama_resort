@@ -1,23 +1,22 @@
-package model;
+package model.facilities;
 
-public class Villa extends Facility {
+public class House extends Facility {
     private Type type;
-    private Double poolArea;
     private Integer floorCount;
 
     public enum Type {
-        ONE_STAR,
-        TWO_STARS,
-        THREE_STARS
+        SUITE,
+        STUDIO,
+        EXECUTIVE,
+        PRESIDENTIAL
     }
 
-    public Villa() {
+    public House() {
     }
 
-    public Villa(String id, String name, Double area, Double fee, int maxCapacity, RentType rentType, Type type, Double poolArea, Integer floorCount) {
+    public House(String id, String name, Double area, Double fee, int maxCapacity, RentType rentType, Type type, Integer floorCount) {
         super(id, name, area, fee, maxCapacity, rentType);
         this.type = type;
-        this.poolArea = poolArea;
         this.floorCount = floorCount;
     }
 
@@ -27,14 +26,6 @@ public class Villa extends Facility {
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    public Double getPoolArea() {
-        return poolArea;
-    }
-
-    public void setPoolArea(Double poolArea) {
-        this.poolArea = poolArea;
     }
 
     public Integer getFloorCount() {

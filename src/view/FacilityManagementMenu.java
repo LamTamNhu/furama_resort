@@ -1,10 +1,11 @@
 package view;
 
 import controller.FacilityController;
-import model.Facility;
+import model.facilities.Facility;
 import utils.InputInformationHandler;
 import utils.InputMenuChoiceHandler;
 
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class FacilityManagementMenu {
@@ -15,10 +16,10 @@ public class FacilityManagementMenu {
 
     private void addNewFacilityMenu() {
         final String ADD_NEW_MENU = "1.\tAdd New Villa\n" +
-                                    "2.\tAdd New House\n" +
-                                    "3.\tAdd New Room\n" +
-                                    "4.\tBack to menu\n" +
-                                    "Enter a number: ";
+                "2.\tAdd New House\n" +
+                "3.\tAdd New Room\n" +
+                "4.\tBack to menu\n" +
+                "Enter a number: ";
         Facility entryToAdd;
         do {
             System.out.print(ADD_NEW_MENU);
@@ -58,7 +59,12 @@ public class FacilityManagementMenu {
             menuInput = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
             switch (menuInput) {
                 case 1:
-                    System.out.println(controller.getAll());
+                    LinkedHashMap<Facility, Integer> facilities = (LinkedHashMap<Facility, Integer>) controller.getAll();
+                    if (facilities != null) {
+                        System.out.println(facilities);
+                    } else {
+                        System.out.println("List is empty!");
+                    }
                     break;
                 case 2:
                     addNewFacilityMenu();

@@ -1,7 +1,11 @@
 package utils;
 
 import controller.*;
-import model.*;
+import model.human.Customer;
+import model.human.Employee;
+import model.human.Person;
+import model.facilities.Facility;
+import model.facilities.Villa;
 
 import java.util.Scanner;
 
@@ -328,7 +332,7 @@ public class InputInformationHandler {
     private static String inputFacilityIdNotInList(FacilityController controller, String idRegex) {
         do {
             System.out.print("Enter ID: ");
-            input = scanner.nextLine();
+            input = scanner.nextLine().toUpperCase();
             if (InputValidator.checkFacilityId(input, idRegex)) {
                 if (controller.findById(input) == null) {
                     return input;
@@ -404,6 +408,8 @@ public class InputInformationHandler {
             input = scanner.nextLine();
             if (InputValidator.checkArea(input)) {
                 return Double.valueOf(input);
+            } else {
+                System.out.println("Area size must be more than 30.");
             }
         } while (true);
     }

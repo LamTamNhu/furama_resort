@@ -1,10 +1,5 @@
 package controller;
 
-import model.Employee;
-import services.IEmployeeService;
-import services.Service;
-import services.impl.EmployeeService;
-
 public abstract class PersonController {
 
     public abstract Object getAll();

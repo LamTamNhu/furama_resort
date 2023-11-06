@@ -1,4 +1,4 @@
-package model;
+package model.facilities;
 
 public abstract class Facility {
     private String id;

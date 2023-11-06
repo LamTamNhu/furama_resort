@@ -1,4 +1,4 @@
-package model;
+package model.human;
 
 public class Customer extends Person {
     private String customerId;

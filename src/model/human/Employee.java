@@ -1,4 +1,4 @@
-package model;
+package model.human;
 
 public class Employee extends Person {
     private String employeeId;

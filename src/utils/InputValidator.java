@@ -55,7 +55,7 @@ public class InputValidator {
     }
 
     public static boolean checkFacilityName(String name) {
-        final String FACILITY_NAME_REGEX = "^[A-Z]";
+        final String FACILITY_NAME_REGEX = "^[A-Z][\\w\\s]{1,70}$";
         return name.matches(FACILITY_NAME_REGEX);
     }
 

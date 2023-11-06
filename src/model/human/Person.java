@@ -1,4 +1,4 @@
-package model;
+package model.human;
 
 
 public abstract class Person {

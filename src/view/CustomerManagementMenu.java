@@ -1,7 +1,7 @@
 package view;
 
 import controller.CustomerController;
-import model.Customer;
+import model.human.Customer;
 import utils.InputInformationHandler;
 
 import java.util.List;

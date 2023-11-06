@@ -1,4 +1,4 @@
-package model;
+package model.facilities;
 
 public class Room extends Facility {
     private String complimentary;

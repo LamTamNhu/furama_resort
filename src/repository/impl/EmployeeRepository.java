@@ -1,9 +1,9 @@
 package repository.impl;
 
-import model.Employee;
+import model.human.Employee;
 import repository.IEmployeeRepository;
-import utils.CsvFileReader;
-import utils.CsvFileWriter;
+import utils.file_io.CsvFileReader;
+import utils.file_io.CsvFileWriter;
 
 import java.util.ArrayList;
 import java.util.List;

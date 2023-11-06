@@ -1,18 +1,102 @@
 package repository.impl;
 
-import model.Facility;
+import model.facilities.Facility;
+import model.facilities.House;
+import model.facilities.Room;
+import model.facilities.Villa;
 import repository.IFacilityRepository;
+import utils.file_io.CsvFileReader;
+import utils.file_io.CsvFileWriter;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Set;
 
 public class FacilityRepository implements IFacilityRepository {
     private static final LinkedHashMap<Facility, Integer> facilities = new LinkedHashMap<>();
+    private static final String PATH = "src/data/facility.csv";
+    private static final String SEPARATOR = ",";
 
     private void updateFromFile() {
+        List<String> listToRead = CsvFileReader.readObjectFromFile(PATH);
+        if (listToRead == null) {
+            System.out.println("List is empty!");
+            return;
+        }
+        facilities.clear();
+        Facility keyToAdd;
+        String[] attributesList;
+        String id;
+        Villa.Type villaType;
+        double poolArea;
+        int floorCount;
+        House.Type houseType;
+        String complimentary;
+        int value = 0;
+
+        for (String line : listToRead) {
+            attributesList = line.split(SEPARATOR);
+            id = attributesList[0];
+
+            if (id.contains("VL")) {
+                villaType = Villa.Type.valueOf(attributesList[6]);
+                poolArea = Double.parseDouble(attributesList[7]);
+                floorCount = Integer.parseInt(attributesList[8]);
+                value = Integer.parseInt(attributesList[9]);
+                keyToAdd = new Villa(villaType, poolArea, floorCount);
+                fillFacilityAttributes(attributesList, keyToAdd);
+            } else if (id.contains("HO")) {
+                keyToAdd = new House();
+            } else {
+                keyToAdd = new Room();
+            }
+            facilities.put(keyToAdd, value);
+        }
+    }
+
+    private void fillFacilityAttributes(String[] attributesList, Facility facility) {
+        String id = attributesList[0];
+        String name = attributesList[1];
+        double area = Double.parseDouble(attributesList[2]);
+        double fee = Double.parseDouble(attributesList[3]);
+        int maxCapacity = Integer.parseInt(attributesList[4]);
+        Facility.RentType rentType = Facility.RentType.valueOf(attributesList[5]);
+        facility.setId(id);
+        facility.setName(name);
+        facility.setArea(area);
+        facility.setFee(fee);
+        facility.setMaxCapacity(maxCapacity);
+        facility.setRentType(rentType);
     }
 
     private void writeToFile() {
+        if (facilities.isEmpty()) {
+            System.out.println("Writing an empty list!");
+            return;
+        }
+        Set<Facility> keys = facilities.keySet();
+        List<String> listToWrite = new ArrayList<>();
+        StringBuilder line;
+        for (Facility e : keys) {
+            line = new StringBuilder(e.getId() + SEPARATOR + e.getName() + SEPARATOR + e.getArea() + SEPARATOR +
+                    e.getFee() + SEPARATOR + e.getMaxCapacity() + SEPARATOR + e.getRentType() +
+                    SEPARATOR);
+            if (e instanceof Villa) {
+                Villa temp = (Villa) e;
+                line.append(temp.getType()).append(SEPARATOR).append(temp.getPoolArea()).
+                        append(SEPARATOR).append(temp.getFloorCount());
+            } else if (e instanceof House) {
+                House temp = (House) e;
+                line.append(temp.getType()).append(SEPARATOR).append(temp.getFloorCount());
+            } else {
+                Room temp = (Room) e;
+                line.append(temp.getComplimentary());
+            }
+            line.append(SEPARATOR).append(facilities.get(e));
+            listToWrite.add(String.valueOf(line));
+        }
+        CsvFileWriter.writeObjectToFile(listToWrite, PATH);
     }
 
     @Override

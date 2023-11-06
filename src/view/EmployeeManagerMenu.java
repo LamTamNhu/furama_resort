@@ -58,7 +58,7 @@ public class EmployeeManagerMenu {
                         System.out.println("No match found!");
                         break;
                     }
-                    System.out.println("Found: " + length + " match the name.");
+                    System.out.println("Found: " + length + " match the name:");
                     for (Employee e : searchResult) {
                         System.out.println(e);
                     }

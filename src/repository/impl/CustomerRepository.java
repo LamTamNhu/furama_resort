@@ -1,6 +1,7 @@
 package repository.impl;
 
 import model.Customer;
+import model.Employee;
 import repository.ICustomerRepository;
 import utils.CsvFileReader;
 import utils.CsvFileWriter;
@@ -42,12 +43,28 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public Object findById(String id) {
+        updateFromFile();
+        for (Customer e : customers) {
+            if (id.equals(e.getCustomerId())) {
+                return e;
+            }
+        }
         return null;
     }
 
     @Override
     public Object findByName(String name) {
-        return null;
+        updateFromFile();
+        List<Customer> result = new ArrayList<>();
+        name = name.toUpperCase();
+        String nameInList;
+        for (Customer e : customers) {
+            nameInList = e.getName().toUpperCase();
+            if (nameInList.contains(name)) {
+                result.add(e);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -59,11 +76,27 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public void removeByID(String id) {
-
+        updateFromFile();
+        int length = customers.size();
+        for (int i = 0; i < length; i++) {
+            if (id.equals(customers.get(i).getCustomerId())) {
+                customers.remove(i);
+                break;
+            }
+        }
+        writeToFile();
     }
 
     @Override
     public void editEntry(String id, Object entry) {
-
+        updateFromFile();
+        int length = customers.size();
+        for (int i = 0; i < length; i++) {
+            if (id.equals(customers.get(i).getCustomerId())) {
+                customers.set(i, (Customer) entry);
+            }
+        }
+        writeToFile();
     }
 }
+

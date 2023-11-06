@@ -13,7 +13,7 @@ public class CustomerController extends PersonController {
 
     @Override
     public Object findById(String customerId) {
-        return null;
+        return customerService.findById(customerId);
     }
 
     @Override
@@ -23,16 +23,16 @@ public class CustomerController extends PersonController {
 
     @Override
     public void editEntry(String idToEdit, Object editedCustomer) {
-
+        customerService.editEntry(idToEdit, editedCustomer);
     }
 
     @Override
     public void removeEntry(String idToDelete) {
-
+        customerService.removeEntry(idToDelete);
     }
 
     @Override
     public Object findByName(String name) {
-        return null;
+        return customerService.findByName(name);
     }
 }

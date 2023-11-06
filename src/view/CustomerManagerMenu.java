@@ -40,29 +40,29 @@ public class CustomerManagerMenu {
                     customerController.addEntry(customerToAdd);
                     System.out.println("Adding customer succeed!");
                     break;
-//                case 3:
-//                    String idToEdit = InputInformation.inputEmployeeIdAlreadyInList();
-//                    Employee editedEmployee = InputInformation.inputEmployeeInfo();
-//                    customerController.editEmployee(idToEdit, editedEmployee);
-//                    System.out.println("Edit succeed.");
-//                    break;
-//                case 4:
-//                    String idToDelete = InputInformation.inputEmployeeIdAlreadyInList();
-//                    customerController.removeEmployee(idToDelete);
-//                    break;
-//                case 5:
-//                    String nameToSearch = InputInformation.nameInput();
-//                    List<Employee> searchResult = (List<Employee>) customerController.findByName(nameToSearch);
-//                    int length = searchResult.size();
-//                    if (length == 0) {
-//                        System.out.println("No match found!");
-//                        break;
-//                    }
-//                    System.out.println("Found: " + length + " employees match the name.");
-//                    for (Employee e : searchResult) {
-//                        System.out.println(e);
-//                    }
-//                    break;
+                case 3:
+                    String idToEdit = InputInformation.inputDatabaseIdAlreadyInList(customerController,"^KH-\\d{4}$");
+                    Customer editedCustomer = InputInformation.inputCustomerInfo();
+                    customerController.editEntry(idToEdit, editedCustomer);
+                    System.out.println("Edit succeed.");
+                    break;
+                case 4:
+                    String idToDelete = InputInformation.inputDatabaseIdAlreadyInList(customerController,"^KH-\\d{4}$");
+                    customerController.removeEntry(idToDelete);
+                    break;
+                case 5:
+                    String nameToSearch = InputInformation.nameInput();
+                    List<Customer> searchResult = (List<Customer>) customerController.findByName(nameToSearch);
+                    int length = searchResult.size();
+                    if (length == 0) {
+                        System.out.println("No match found!");
+                        break;
+                    }
+                    System.out.println("Found: " + length + " match the name:");
+                    for (Customer e : searchResult) {
+                        System.out.println(e);
+                    }
+                    break;
                 case 6:
                     isExit = true;
                     break;

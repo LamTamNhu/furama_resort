@@ -18,21 +18,23 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void editEntry(String id, Object editedEmployee) {
-
+        repository.editEntry(id, editedEmployee);
     }
 
     @Override
     public void removeEntry(String id) {
-
+        repository.removeByID(id);
     }
 
     @Override
-    public Boolean findById(String id) {
-        return null;
+    public Object findById(String id) {
+        return repository.findById(id);
     }
 
     @Override
-    public Boolean findByName(String name) {
-        return null;
+    public Object findByName(String name) {
+        return repository.findByName(name);
     }
+
+
 }

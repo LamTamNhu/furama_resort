@@ -1,16 +1,20 @@
 package services.impl;
 
+import repository.Repository;
+import repository.impl.FacilityRepository;
 import services.IFacilityService;
 
 public class FacilityService implements IFacilityService {
+    Repository repository = new FacilityRepository();
+
     @Override
     public Object getAll() {
-        return null;
+        return repository.getAll();
     }
 
     @Override
     public void addEntry(Object entry) {
-
+        repository.addEntry(entry);
     }
 
     @Override
@@ -24,12 +28,12 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public Boolean findById(String id) {
-        return null;
+    public Object findById(String id) {
+        return repository.findById(id);
     }
 
     @Override
-    public Boolean findByName(String name) {
+    public Object findByName(String name) {
         return null;
     }
 }

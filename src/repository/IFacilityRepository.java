@@ -1,4 +1,4 @@
 package repository;
 
-public interface IFacilityRepository {
+public interface IFacilityRepository extends Repository {
 }

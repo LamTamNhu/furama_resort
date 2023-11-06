@@ -1,7 +1,7 @@
 package model;
 
 
-public class Person {
+public abstract class Person {
     private final String SEPARATOR = ",";
     private String name;
     private String birthDate;
@@ -42,17 +42,8 @@ public class Person {
         return gender;
     }
 
-    public void setGender(String gender) {
-        switch (gender) {
-            case "MALE":
-                this.gender = Gender.MALE;
-                break;
-            case "FEMALE":
-                this.gender = Gender.FEMALE;
-                break;
-            default:
-                System.out.println("Wrong gender String input!");
-        }
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getIdNumber() {

@@ -1,6 +1,6 @@
 package utils;
 
-public class MenuInput {
+public class InputMenuChoiceHandler {
     private static final Integer INVALID_INPUT = -1;
     private static final String invalidInput = "Invalid input, please try again!";
 

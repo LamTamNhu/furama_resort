@@ -3,7 +3,7 @@ package view;
 import controller.EmployeeController;
 import controller.PersonController;
 import model.human.Employee;
-import utils.EntryInputHandler;
+import utils.PersonInputHandler;
 
 import java.util.List;
 import java.util.Scanner;
@@ -38,18 +38,18 @@ public class EmployeeManagementMenu {
                     }
                     break;
                 case 2:
-                    Employee employeeToAdd = EntryInputHandler.inputEmployeeInfo();
+                    Employee employeeToAdd = PersonInputHandler.inputEmployeeInfo();
                     employeeController.addEntry(employeeToAdd);
                     System.out.println("Adding employee succeed!");
                     break;
                 case 3:
-                    String idToEdit = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
-                    Employee editedEmployee = EntryInputHandler.inputEmployeeInfo();
+                    String idToEdit = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
+                    Employee editedEmployee = PersonInputHandler.inputEmployeeInfo();
                     employeeController.editEntry(idToEdit, editedEmployee);
                     System.out.println("Edit succeed!");
                     break;
                 case 4:
-                    String idToDelete = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
+                    String idToDelete = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
                     if (confirmDelete(idToDelete)) {
                         employeeController.removeEntry(idToDelete);
                         System.out.println("Delete succeed!");
@@ -58,7 +58,7 @@ public class EmployeeManagementMenu {
                     }
                     break;
                 case 5:
-                    String nameToSearch = EntryInputHandler.nameInput();
+                    String nameToSearch = PersonInputHandler.nameInput();
                     List<Employee> searchResult = (List<Employee>) employeeController.findByName(nameToSearch);
                     int length = searchResult.size();
                     if (length == 0) {

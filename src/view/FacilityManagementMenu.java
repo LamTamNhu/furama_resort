@@ -2,7 +2,7 @@ package view;
 
 import controller.FacilityController;
 import model.facilities.Facility;
-import utils.EntryInputHandler;
+import utils.FacilityInputHandler;
 import utils.MenuInputHandler;
 
 import java.util.LinkedHashMap;
@@ -28,14 +28,14 @@ public class FacilityManagementMenu {
             menuInput = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (menuInput) {
                 case 1:
-                    entryToAdd = EntryInputHandler.inputVillaInfo();
+                    entryToAdd = FacilityInputHandler.inputVillaInfo();
                     controller.addEntry(entryToAdd);
                     break;
                 case 2:
-                    entryToAdd = EntryInputHandler.inputHouseInfo();
+                    entryToAdd = FacilityInputHandler.inputHouseInfo();
                     controller.addEntry(entryToAdd);
                 case 3:
-                    entryToAdd = EntryInputHandler.inputRoomInfo();
+                    entryToAdd = FacilityInputHandler.inputRoomInfo();
                     controller.addEntry(entryToAdd);
                     break;
                 case 4:
@@ -79,7 +79,7 @@ public class FacilityManagementMenu {
 //                    controller.getMaintenance();
 //                    break;
                 case 4:
-                    String idToRemove = EntryInputHandler.inputFacilityIdAlreadyInList();
+                    String idToRemove = FacilityInputHandler.inputFacilityIdAlreadyInList();
                     if (confirmDelete(idToRemove)) {
                         controller.remove(idToRemove);
                         System.out.println("Delete succeed!");

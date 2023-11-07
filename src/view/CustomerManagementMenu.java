@@ -2,7 +2,7 @@ package view;
 
 import controller.CustomerController;
 import model.human.Customer;
-import utils.EntryInputHandler;
+import utils.PersonInputHandler;
 
 import java.util.List;
 import java.util.Scanner;
@@ -37,18 +37,18 @@ public class CustomerManagementMenu {
                     }
                     break;
                 case 2:
-                    Customer customerToAdd = EntryInputHandler.inputCustomerInfo();
+                    Customer customerToAdd = PersonInputHandler.inputCustomerInfo();
                     customerController.addEntry(customerToAdd);
                     System.out.println("Adding customer succeed!");
                     break;
                 case 3:
-                    String idToEdit = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
-                    Customer editedCustomer = EntryInputHandler.inputCustomerInfo();
+                    String idToEdit = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
+                    Customer editedCustomer = PersonInputHandler.inputCustomerInfo();
                     customerController.editEntry(idToEdit, editedCustomer);
                     System.out.println("Edit succeed.");
                     break;
                 case 4:
-                    String idToDelete = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
+                    String idToDelete = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
                     if (confirmDelete(idToDelete)) {
                         customerController.removeEntry(idToDelete);
                         System.out.println("Delete succeed!");
@@ -57,7 +57,7 @@ public class CustomerManagementMenu {
                     }
                     break;
                 case 5:
-                    String nameToSearch = EntryInputHandler.nameInput();
+                    String nameToSearch = PersonInputHandler.nameInput();
                     List<Customer> searchResult = (List<Customer>) customerController.findByName(nameToSearch);
                     int length = searchResult.size();
                     if (length == 0) {

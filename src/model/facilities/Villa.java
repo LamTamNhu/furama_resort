@@ -50,4 +50,12 @@ public class Villa extends Facility {
     public void setFloorCount(Integer floorCount) {
         this.floorCount = floorCount;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+               "Type: " + type +
+               " | Pool area: " + poolArea +
+               " m2 | Floors: " + floorCount;
+    }
 }

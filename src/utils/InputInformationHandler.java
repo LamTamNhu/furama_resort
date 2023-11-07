@@ -1,6 +1,8 @@
 package utils;
 
 import controller.*;
+import model.facilities.House;
+import model.facilities.Room;
 import model.human.Customer;
 import model.human.Employee;
 import model.human.Person;
@@ -15,11 +17,10 @@ public class InputInformationHandler {
 
     public static Customer inputCustomerInfo() {
         PersonController customerController = new CustomerController();
-        final String ID_REGEX = "^KH-\\d{4}$";
 
         Customer customer = new Customer();
         inputBasicPersonalInfo(customer);
-        customer.setCustomerId(inputPersonDatabaseIdNotInList(customerController, ID_REGEX));
+        customer.setCustomerId(inputPersonDatabaseIdNotInList(customerController));
         customer.setCustomerTier(inputCustomerTier());
         customer.setAddress(inputAddress());
 
@@ -60,10 +61,9 @@ public class InputInformationHandler {
 
     public static Employee inputEmployeeInfo() {
         PersonController employeeController = new EmployeeController();
-        final String ID_REGEX = "^NV-\\d{4}$";
         Employee employee = new Employee();
         inputBasicPersonalInfo(employee);
-        employee.setEmployeeId(inputPersonDatabaseIdNotInList(employeeController, ID_REGEX));
+        employee.setEmployeeId(inputPersonDatabaseIdNotInList(employeeController));
         employee.setQualification(inputQualification());
         employee.setPosition(inputPosition());
         employee.setSalary(inputSalary());
@@ -142,11 +142,11 @@ public class InputInformationHandler {
         } while (true);
     }
 
-    private static String inputPersonDatabaseIdNotInList(PersonController controller, String REGEX) {
+    private static String inputPersonDatabaseIdNotInList(PersonController controller) {
         do {
             System.out.print("Enter entry ID: ");
             input = scanner.nextLine().toUpperCase();
-            if (InputValidator.checkDatabaseId(input, REGEX)) {
+            if (InputValidator.checkDatabaseId(input)) {
                 if (controller.findById(input) != null) {
                     System.out.println("This ID already exist, please try again!");
                 } else {
@@ -249,11 +249,11 @@ public class InputInformationHandler {
         } while (true);
     }
 
-    public static String inputPersonDatabaseIdAlreadyInList(PersonController controller, String REGEX) {
+    public static String inputPersonDatabaseIdAlreadyInList(PersonController controller) {
         do {
             System.out.print("Enter entry ID: ");
             input = scanner.nextLine().toUpperCase();
-            if (InputValidator.checkDatabaseId(input, REGEX)) {
+            if (InputValidator.checkDatabaseId(input)) {
                 if (controller.findById(input) != null) {
                     return input;
                 } else {
@@ -268,20 +268,19 @@ public class InputInformationHandler {
     public static Facility inputVillaInfo() {
         Villa villa = new Villa();
         FacilityController controller = new VillaController();
-        final String ID_REGEX = "^SVVL-\\d{4}$";
+        villa.setId(inputFacilityIdNotInList(controller));
         inputBasicFacilityInfo(villa);
-        villa.setId(inputFacilityIdNotInList(controller, ID_REGEX));
         villa.setType(inputVillaType());
         villa.setPoolArea(inputVillaPoolArea());
-        villa.setFloorCount(inputVillaFloorCount());
+        villa.setFloorCount(inputFloorCount());
 
         return villa;
     }
 
-    private static Integer inputVillaFloorCount() {
+    private static Integer inputFloorCount() {
         int floorCount;
         do {
-            System.out.print("Enter villa's number of floor: ");
+            System.out.print("Enter number of floor: ");
             input = scanner.nextLine();
             try {
                 floorCount = Integer.parseInt(input);
@@ -329,11 +328,18 @@ public class InputInformationHandler {
         } while (true);
     }
 
-    private static String inputFacilityIdNotInList(FacilityController controller, String idRegex) {
+    private static String inputFacilityIdNotInList(FacilityController controller) {
         do {
-            System.out.print("Enter ID: ");
+            if (controller instanceof VillaController) {
+                System.out.print("Enter ID (SVVL-YYYY | Example: SVVL-0001): ");
+            } else if (controller instanceof HouseController) {
+                System.out.println("Enter ID (SVHO-YYYY | Example: SVHO-0001): ");
+            } else {
+                System.out.println("Enter ID (SVRO-YYYY | Example: SVRO-0001): ");
+            }
+
             input = scanner.nextLine().toUpperCase();
-            if (InputValidator.checkFacilityId(input, idRegex)) {
+            if (InputValidator.checkDatabaseId(input)) {
                 if (controller.findById(input) == null) {
                     return input;
                 } else {
@@ -379,7 +385,7 @@ public class InputInformationHandler {
 
     private static int inputFacilityMaxCapacity() {
         do {
-            System.out.print("Enter max capacity: ");
+            System.out.print("Enter max capacity (maximum 20): ");
             input = scanner.nextLine();
             if (InputValidator.checkMaxCapacity(input)) {
                 return Integer.parseInt(input);
@@ -396,15 +402,14 @@ public class InputInformationHandler {
             if (InputValidator.checkFee(input)) {
                 return Double.valueOf(input);
             } else {
-                System.out.println("Invalid fee input, please try again!");
+                System.out.println("Invalid number input. Need to be more than 1, please try again!");
             }
-
         } while (true);
     }
 
     private static Double inputFacilityArea() {
         do {
-            System.out.print("Enter area size: ");
+            System.out.print("Enter area size (minimum 30): ");
             input = scanner.nextLine();
             if (InputValidator.checkArea(input)) {
                 return Double.valueOf(input);
@@ -418,12 +423,80 @@ public class InputInformationHandler {
         do {
             System.out.print("Enter name: ");
             input = scanner.nextLine();
+            if (input != null) {
+                input = input.substring(0, 1).toUpperCase() + input.substring(1);
+            }
             if (InputValidator.checkFacilityName(input)) {
                 return input;
             } else {
-                System.out.println("Invalid name input, try again!");
+                System.out.println("Invalid name input. No special character and maximum 70 characters, try again!");
             }
         } while (true);
 
+    }
+
+    public static Facility inputHouseInfo() {
+        FacilityController controller = new HouseController();
+        House house = new House();
+        house.setId(inputFacilityIdNotInList(controller));
+        inputBasicFacilityInfo(house);
+        house.setHouseType(inputHouseType());
+        house.setFloorCount(inputFloorCount());
+        return house;
+    }
+
+    private static House.HouseType inputHouseType() {
+        int inputNum;
+        do {
+            System.out.println("Choose house type:\n" +
+                               "1. SUITE,\n" +
+                               "2. STUDIO,\n" +
+                               "3. EXECUTIVE,\n" +
+                               "4. PRESIDENTIAL");
+            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            switch (inputNum) {
+                case 1:
+                    return House.HouseType.SUITE;
+                case 2:
+                    return House.HouseType.STUDIO;
+                case 3:
+                    return House.HouseType.EXECUTIVE;
+                case 4:
+                    return House.HouseType.PRESIDENTIAL;
+                default:
+                    System.out.println("Invalid choice, please pick one from the menu!");
+            }
+        } while (true);
+    }
+
+    public static Facility inputRoomInfo() {
+        FacilityController controller = new RoomController();
+        Room room = new Room();
+        room.setId(inputFacilityIdNotInList(controller));
+        inputBasicFacilityInfo(room);
+        room.setComplimentary(inputRoomComplimentary());
+        return room;
+    }
+
+    private static String inputRoomComplimentary() {
+        System.out.print("Enter room's complimentary: ");
+        return scanner.nextLine();
+    }
+
+    public static String inputFacilityIdAlreadyInList() {
+        FacilityController controller = new FacilityController();
+        do {
+            System.out.print("Enter ID (SVXX-YYYY): ");
+            input = scanner.nextLine().toUpperCase();
+            if (InputValidator.checkDatabaseId(input)) {
+                if (controller.findById(input) != null) {
+                    return input;
+                } else {
+                    System.out.println("Can't find this ID, please try again!");
+                }
+            } else {
+                System.out.println("Invalid ID format, please try again!");
+            }
+        } while (true);
     }
 }

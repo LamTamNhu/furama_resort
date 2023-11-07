@@ -12,6 +12,7 @@ import static utils.InputMenuChoiceHandler.inputNumForMenu;
 public class CustomerManagementMenu {
     private static final CustomerController customerController = new CustomerController();
     private final Scanner scanner = new Scanner(System.in);
+    private static final byte CUSTOMER = 2;
 
     public void displayCustomerMenu() {
         final String CUSTOMER_MENU = "--------Customer Menu--------\n" +
@@ -40,13 +41,13 @@ public class CustomerManagementMenu {
                     System.out.println("Adding customer succeed!");
                     break;
                 case 3:
-                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController,"^KH-\\d{4}$");
+                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController);
                     Customer editedCustomer = InputInformationHandler.inputCustomerInfo();
                     customerController.editEntry(idToEdit, editedCustomer);
                     System.out.println("Edit succeed.");
                     break;
                 case 4:
-                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController,"^KH-\\d{4}$");
+                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController);
                     customerController.removeEntry(idToDelete);
                     break;
                 case 5:

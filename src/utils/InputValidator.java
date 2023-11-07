@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputValidator {
+
     public static Boolean checkEmail(String email) {
         final String REGEX = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(REGEX);
@@ -25,8 +26,27 @@ public class InputValidator {
         return id.matches(REGEX);
     }
 
-    public static Boolean checkDatabaseId(String id, String REGEX) {
-        return id.matches(REGEX);
+    public static Boolean checkDatabaseId(String id) {
+        final String VILLA_ID_REGEX = "^SVVL-\\d{4}$";
+        final String HOUSE_ID_REGEX = "^SVHO-\\d{4}$";
+        final String ROOM_ID_REGEX = "^SVRO-\\d{4}$";
+        final String CUSTOMER_ID_REGEX = "^KH-\\d{4}$";
+        final String EMPLOYEE_ID_REGEX = "^NV-\\d{4}$";
+
+        if (id.contains("SVVL")) {
+            return id.matches(VILLA_ID_REGEX);
+        } else if (id.contains("SVHO")) {
+            return id.matches(HOUSE_ID_REGEX);
+        } else if (id.contains("SVRO")) {
+            return id.matches(ROOM_ID_REGEX);
+        } else if (id.contains("KH")) {
+            return id.matches(CUSTOMER_ID_REGEX);
+        } else if (id.contains("NV")) {
+            return id.matches(EMPLOYEE_ID_REGEX);
+        } else {
+            System.out.println("Database ID Validator check error!");
+            return false;
+        }
     }
 
     public static Boolean checkName(String name) {
@@ -55,7 +75,7 @@ public class InputValidator {
     }
 
     public static boolean checkFacilityName(String name) {
-        final String FACILITY_NAME_REGEX = "^[A-Z][\\w\\s]{1,70}$";
+        final String FACILITY_NAME_REGEX = "^[\\w\\s\\d]{1,70}$";
         return name.matches(FACILITY_NAME_REGEX);
     }
 
@@ -97,9 +117,5 @@ public class InputValidator {
             return false;
         }
         return true;
-    }
-
-    public static boolean checkFacilityId(String input, String idRegex) {
-        return input.matches(idRegex);
     }
 }

@@ -24,7 +24,7 @@ public class FacilityService implements IFacilityService {
 
     @Override
     public void removeEntry(String id) {
-
+        repository.removeByID(id);
     }
 
     @Override

@@ -11,11 +11,20 @@ public class Room extends Facility {
         this.complimentary = complimentary;
     }
 
+    public Room(String complimentary) {
+        this.complimentary = complimentary;
+    }
+
     public String getComplimentary() {
         return complimentary;
     }
 
     public void setComplimentary(String complimentary) {
         this.complimentary = complimentary;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Complimentary: '" + complimentary;
     }
 }

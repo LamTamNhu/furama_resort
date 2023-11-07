@@ -25,13 +25,13 @@ public class FacilityRepository implements IFacilityRepository {
             return;
         }
         facilities.clear();
-        Facility keyToAdd;
+        Facility keyToAdd = null;
         String[] attributesList;
         String id;
         Villa.Type villaType;
         double poolArea;
         int floorCount;
-        House.Type houseType;
+        House.HouseType houseType;
         String complimentary;
         int value = 0;
 
@@ -39,18 +39,23 @@ public class FacilityRepository implements IFacilityRepository {
             attributesList = line.split(SEPARATOR);
             id = attributesList[0];
 
-            if (id.contains("VL")) {
+            if (id.contains("SVVL")) {
                 villaType = Villa.Type.valueOf(attributesList[6]);
                 poolArea = Double.parseDouble(attributesList[7]);
                 floorCount = Integer.parseInt(attributesList[8]);
                 value = Integer.parseInt(attributesList[9]);
                 keyToAdd = new Villa(villaType, poolArea, floorCount);
-                fillFacilityAttributes(attributesList, keyToAdd);
-            } else if (id.contains("HO")) {
-                keyToAdd = new House();
-            } else {
-                keyToAdd = new Room();
+            } else if (id.contains("SVHO")) {
+                houseType = House.HouseType.valueOf(attributesList[6]);
+                floorCount = Integer.parseInt(attributesList[7]);
+                value = Integer.parseInt(attributesList[8]);
+                keyToAdd = new House(houseType, floorCount);
+            } else if (id.contains("SVRO")) {
+                complimentary = attributesList[6];
+                value = Integer.parseInt(attributesList[7]);
+                keyToAdd = new Room(complimentary);
             }
+            fillFacilityAttributes(attributesList, keyToAdd);
             facilities.put(keyToAdd, value);
         }
     }
@@ -80,15 +85,15 @@ public class FacilityRepository implements IFacilityRepository {
         StringBuilder line;
         for (Facility e : keys) {
             line = new StringBuilder(e.getId() + SEPARATOR + e.getName() + SEPARATOR + e.getArea() + SEPARATOR +
-                    e.getFee() + SEPARATOR + e.getMaxCapacity() + SEPARATOR + e.getRentType() +
-                    SEPARATOR);
+                                     e.getFee() + SEPARATOR + e.getMaxCapacity() + SEPARATOR + e.getRentType() +
+                                     SEPARATOR);
             if (e instanceof Villa) {
                 Villa temp = (Villa) e;
                 line.append(temp.getType()).append(SEPARATOR).append(temp.getPoolArea()).
                         append(SEPARATOR).append(temp.getFloorCount());
             } else if (e instanceof House) {
                 House temp = (House) e;
-                line.append(temp.getType()).append(SEPARATOR).append(temp.getFloorCount());
+                line.append(temp.getHouseType()).append(SEPARATOR).append(temp.getFloorCount());
             } else {
                 Room temp = (Room) e;
                 line.append(temp.getComplimentary());
@@ -130,6 +135,10 @@ public class FacilityRepository implements IFacilityRepository {
 
     @Override
     public void removeByID(String id) {
+        updateFromFile();
+        Facility entryToRemove = (Facility) findById(id);
+        facilities.remove(entryToRemove);
+        writeToFile();
     }
 
     @Override

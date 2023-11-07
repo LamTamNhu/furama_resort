@@ -14,6 +14,7 @@ public class EmployeeManagementMenu {
     private static final PersonController employeeController = new EmployeeController();
     private final Scanner scanner = new Scanner(System.in);
 
+
     public void displayEmployeeMenu() {
         final String EMPLOYEE_MENU = "--------Employee Menu--------\n" +
                                      "1\tDisplay list employees\n" +
@@ -41,13 +42,13 @@ public class EmployeeManagementMenu {
                     System.out.println("Adding employee succeed!");
                     break;
                 case 3:
-                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController, "^NV-\\d{4}$");
+                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
                     Employee editedEmployee = InputInformationHandler.inputEmployeeInfo();
                     employeeController.editEntry(idToEdit, editedEmployee);
                     System.out.println("Edit succeed!");
                     break;
                 case 4:
-                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController, "^NV-\\d{4}$");
+                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
                     employeeController.removeEntry(idToDelete);
                     System.out.println("Delete succeed!");
                     break;

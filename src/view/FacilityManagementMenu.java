@@ -16,10 +16,10 @@ public class FacilityManagementMenu {
 
     private void addNewFacilityMenu() {
         final String ADD_NEW_MENU = "1.\tAdd New Villa\n" +
-                "2.\tAdd New House\n" +
-                "3.\tAdd New Room\n" +
-                "4.\tBack to menu\n" +
-                "Enter a number: ";
+                                    "2.\tAdd New House\n" +
+                                    "3.\tAdd New Room\n" +
+                                    "4.\tBack to menu\n" +
+                                    "Enter a number: ";
         Facility entryToAdd;
         do {
             System.out.print(ADD_NEW_MENU);
@@ -29,11 +29,13 @@ public class FacilityManagementMenu {
                     entryToAdd = InputInformationHandler.inputVillaInfo();
                     controller.addEntry(entryToAdd);
                     break;
-//                case 2:
-//                    entryToAdd = InputInformationHandler.inputHouseInfo();
-//                case 3:
-//                    entryToAdd = InputInformationHandler.inputRoomInfo();
-//                    break;
+                case 2:
+                    entryToAdd = InputInformationHandler.inputHouseInfo();
+                    controller.addEntry(entryToAdd);
+                case 3:
+                    entryToAdd = InputInformationHandler.inputRoomInfo();
+                    controller.addEntry(entryToAdd);
+                    break;
                 case 4:
                     return;
                 default:
@@ -46,12 +48,12 @@ public class FacilityManagementMenu {
 
 
         final String FACILITY_MENU = "--------Facility Menu--------\n" +
-                "1\tDisplay list facility\n" +
-                "2\tAdd new facility\n" +
-                "3\tDisplay list facility maintenance\n" +
-                "4\tDelete facility\n" +
-                "5\tReturn main menu\n" +
-                "Enter a number: ";
+                                     "1\tDisplay list facility\n" +
+                                     "2\tAdd new facility\n" +
+                                     "3\tDisplay list facility maintenance\n" +
+                                     "4\tDelete facility\n" +
+                                     "5\tReturn main menu\n" +
+                                     "Enter a number: ";
 
         boolean isExit = false;
         do {
@@ -61,7 +63,9 @@ public class FacilityManagementMenu {
                 case 1:
                     LinkedHashMap<Facility, Integer> facilities = (LinkedHashMap<Facility, Integer>) controller.getAll();
                     if (facilities != null) {
-                        System.out.println(facilities);
+                        for (Facility e : facilities.keySet()) {
+                            System.out.println(e);
+                        }
                     } else {
                         System.out.println("List is empty!");
                     }
@@ -72,9 +76,10 @@ public class FacilityManagementMenu {
 //                case 3:
 //                    controller.getMaintenance();
 //                    break;
-//                case 4:
-//                    controller.remove();
-//                    break;
+                case 4:
+                    String idToRemove = InputInformationHandler.inputFacilityIdAlreadyInList();
+                    controller.remove(idToRemove);
+                    break;
                 case 5:
                     isExit = true;
                     break;

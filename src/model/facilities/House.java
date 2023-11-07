@@ -1,10 +1,15 @@
 package model.facilities;
 
 public class House extends Facility {
-    private Type type;
+    private HouseType houseType;
     private Integer floorCount;
 
-    public enum Type {
+    public House(HouseType houseType, int floorCount) {
+        this.houseType = houseType;
+        this.floorCount = floorCount;
+    }
+
+    public enum HouseType {
         SUITE,
         STUDIO,
         EXECUTIVE,
@@ -14,18 +19,18 @@ public class House extends Facility {
     public House() {
     }
 
-    public House(String id, String name, Double area, Double fee, int maxCapacity, RentType rentType, Type type, Integer floorCount) {
+    public House(String id, String name, Double area, Double fee, int maxCapacity, RentType rentType, HouseType type, Integer floorCount) {
         super(id, name, area, fee, maxCapacity, rentType);
-        this.type = type;
+        this.houseType = type;
         this.floorCount = floorCount;
     }
 
-    public Type getType() {
-        return type;
+    public HouseType getHouseType() {
+        return houseType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setHouseType(HouseType houseType) {
+        this.houseType = houseType;
     }
 
     public Integer getFloorCount() {
@@ -34,5 +39,12 @@ public class House extends Facility {
 
     public void setFloorCount(Integer floorCount) {
         this.floorCount = floorCount;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+               " | Type: " + houseType +
+               " | FloorCount: " + floorCount;
     }
 }

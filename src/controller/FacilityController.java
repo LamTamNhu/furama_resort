@@ -18,4 +18,8 @@ public class FacilityController {
     public void addEntry(Facility entryToAdd) {
         facilityService.addEntry(entryToAdd);
     }
+
+    public void remove(String idToRemove) {
+        facilityService.removeEntry(idToRemove);
+    }
 }

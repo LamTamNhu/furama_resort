@@ -2,12 +2,13 @@ package view;
 
 import controller.CustomerController;
 import model.human.Customer;
-import utils.InputInformationHandler;
+import utils.EntryInputHandler;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static utils.InputMenuChoiceHandler.inputNumForMenu;
+import static utils.MenuInputHandler.confirmDelete;
+import static utils.MenuInputHandler.inputNumForMenu;
 
 public class CustomerManagementMenu {
     private static final CustomerController customerController = new CustomerController();
@@ -36,22 +37,27 @@ public class CustomerManagementMenu {
                     }
                     break;
                 case 2:
-                    Customer customerToAdd = InputInformationHandler.inputCustomerInfo();
+                    Customer customerToAdd = EntryInputHandler.inputCustomerInfo();
                     customerController.addEntry(customerToAdd);
                     System.out.println("Adding customer succeed!");
                     break;
                 case 3:
-                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController);
-                    Customer editedCustomer = InputInformationHandler.inputCustomerInfo();
+                    String idToEdit = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
+                    Customer editedCustomer = EntryInputHandler.inputCustomerInfo();
                     customerController.editEntry(idToEdit, editedCustomer);
                     System.out.println("Edit succeed.");
                     break;
                 case 4:
-                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(customerController);
-                    customerController.removeEntry(idToDelete);
+                    String idToDelete = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
+                    if (confirmDelete(idToDelete)) {
+                        customerController.removeEntry(idToDelete);
+                        System.out.println("Delete succeed!");
+                    } else {
+                        System.out.println("Delete canceled!");
+                    }
                     break;
                 case 5:
-                    String nameToSearch = InputInformationHandler.nameInput();
+                    String nameToSearch = EntryInputHandler.nameInput();
                     List<Customer> searchResult = (List<Customer>) customerController.findByName(nameToSearch);
                     int length = searchResult.size();
                     if (length == 0) {

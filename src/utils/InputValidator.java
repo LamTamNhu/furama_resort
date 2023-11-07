@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 public class InputValidator {
 
     public static Boolean checkEmail(String email) {
+        if (email.length() >= 70) {
+            System.out.println("Email can't be more than 70 characters!");
+            return false;
+        }
         final String REGEX = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         return email.matches(REGEX);
     }
@@ -22,7 +26,7 @@ public class InputValidator {
     }
 
     public static Boolean checkId(String id) {
-        final String REGEX = "^\\d{9,10}$";
+        final String REGEX = "^\\d{9,12}$";
         return id.matches(REGEX);
     }
 
@@ -50,6 +54,10 @@ public class InputValidator {
     }
 
     public static Boolean checkName(String name) {
+        if (name.length() >= 70) {
+            System.out.println("Name can't be more than 70 characters!");
+            return false;
+        }
         final String REGEX = "\\b[^A-Z\\s]";
         Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(name);
@@ -75,7 +83,11 @@ public class InputValidator {
     }
 
     public static boolean checkFacilityName(String name) {
-        final String FACILITY_NAME_REGEX = "^[\\w\\s\\d]{1,70}$";
+        if (name.length() >= 70) {
+            System.out.println("Name can't be more than 70 characters!");
+            return false;
+        }
+        final String FACILITY_NAME_REGEX = "^[\\w\\s\\d]";
         return name.matches(FACILITY_NAME_REGEX);
     }
 
@@ -88,6 +100,9 @@ public class InputValidator {
                 return false;
             }
         } catch (NumberFormatException e) {
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -102,6 +117,9 @@ public class InputValidator {
             }
         } catch (NumberFormatException e) {
             return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -114,6 +132,9 @@ public class InputValidator {
                 return false;
             }
         } catch (NumberFormatException e) {
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
         return true;

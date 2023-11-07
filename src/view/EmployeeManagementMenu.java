@@ -3,12 +3,13 @@ package view;
 import controller.EmployeeController;
 import controller.PersonController;
 import model.human.Employee;
-import utils.InputInformationHandler;
+import utils.EntryInputHandler;
 
 import java.util.List;
 import java.util.Scanner;
 
-import static utils.InputMenuChoiceHandler.inputNumForMenu;
+import static utils.MenuInputHandler.confirmDelete;
+import static utils.MenuInputHandler.inputNumForMenu;
 
 public class EmployeeManagementMenu {
     private static final PersonController employeeController = new EmployeeController();
@@ -37,23 +38,27 @@ public class EmployeeManagementMenu {
                     }
                     break;
                 case 2:
-                    Employee employeeToAdd = InputInformationHandler.inputEmployeeInfo();
+                    Employee employeeToAdd = EntryInputHandler.inputEmployeeInfo();
                     employeeController.addEntry(employeeToAdd);
                     System.out.println("Adding employee succeed!");
                     break;
                 case 3:
-                    String idToEdit = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
-                    Employee editedEmployee = InputInformationHandler.inputEmployeeInfo();
+                    String idToEdit = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
+                    Employee editedEmployee = EntryInputHandler.inputEmployeeInfo();
                     employeeController.editEntry(idToEdit, editedEmployee);
                     System.out.println("Edit succeed!");
                     break;
                 case 4:
-                    String idToDelete = InputInformationHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
-                    employeeController.removeEntry(idToDelete);
-                    System.out.println("Delete succeed!");
+                    String idToDelete = EntryInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
+                    if (confirmDelete(idToDelete)) {
+                        employeeController.removeEntry(idToDelete);
+                        System.out.println("Delete succeed!");
+                    } else {
+                        System.out.println("Delete canceled!");
+                    }
                     break;
                 case 5:
-                    String nameToSearch = InputInformationHandler.nameInput();
+                    String nameToSearch = EntryInputHandler.nameInput();
                     List<Employee> searchResult = (List<Employee>) employeeController.findByName(nameToSearch);
                     int length = searchResult.size();
                     if (length == 0) {

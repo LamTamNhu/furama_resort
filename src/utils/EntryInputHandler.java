@@ -11,7 +11,7 @@ import model.facilities.Villa;
 
 import java.util.Scanner;
 
-public class InputInformationHandler {
+public class EntryInputHandler {
     private static final Scanner scanner = new Scanner(System.in);
     private static String input;
 
@@ -41,7 +41,7 @@ public class InputInformationHandler {
                                "                    3. GOLD\n" +
                                "                    4. SILVER\n" +
                                "                    5. MEMBER");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return Customer.CustomerTier.DIAMOND;
@@ -92,13 +92,13 @@ public class InputInformationHandler {
         int inputNum;
         do {
             System.out.println("Choose position:\n" +
-                               "                    1. RECEPTIONIST,\n" +
-                               "                    2. SERVER,\n" +
-                               "                    3. EXPERT,\n" +
-                               "                    4. SUPERVISOR,\n" +
-                               "                    5. MANAGER,\n" +
-                               "                    6. DIRECTOR");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+                               "1. RECEPTIONIST,\n" +
+                               "2. SERVER,\n" +
+                               "3. EXPERT,\n" +
+                               "4. SUPERVISOR,\n" +
+                               "5. MANAGER,\n" +
+                               "6. DIRECTOR");
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return Employee.Position.RECEPTIONIST;
@@ -126,7 +126,7 @@ public class InputInformationHandler {
                                "2. COLLEGE,\n" +
                                "3. UNIVERSITY,\n" +
                                "4. POST GRADUATE");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return Employee.Qualification.INTERMEDIATE;
@@ -144,7 +144,11 @@ public class InputInformationHandler {
 
     private static String inputPersonDatabaseIdNotInList(PersonController controller) {
         do {
-            System.out.print("Enter entry ID: ");
+            if (controller instanceof EmployeeController) {
+                System.out.print("Enter employee ID (NV-YYYY): ");
+            } else if (controller instanceof CustomerController) {
+                System.out.print("Enter customer ID (KH-YYYY): ");
+            }
             input = scanner.nextLine().toUpperCase();
             if (InputValidator.checkDatabaseId(input)) {
                 if (controller.findById(input) != null) {
@@ -169,7 +173,7 @@ public class InputInformationHandler {
 
     private static String emailInput() {
         do {
-            System.out.print("Enter email: ");
+            System.out.print("Enter email (Exp: example@exam.ple): ");
             input = scanner.nextLine();
             if (InputValidator.checkEmail(input)) {
                 return input;
@@ -181,19 +185,19 @@ public class InputInformationHandler {
 
     private static String phoneNumberInput() {
         do {
-            System.out.print("Enter phone number: ");
+            System.out.print("Enter phone number (Example: 0123456789): ");
             input = scanner.nextLine();
             if (InputValidator.checkPhoneNumber(input)) {
                 return input;
             } else {
-                System.out.println("Phone number should have 10 digits, try again!");
+                System.out.println("Phone number should start with 0 and have 10 digits, try again!");
             }
         } while (true);
     }
 
     private static String idNumberInput() {
         do {
-            System.out.print("Enter identification number: ");
+            System.out.print("Enter identification number (9-12 numbers): ");
             input = scanner.nextLine();
             if (InputValidator.checkId(input)) {
                 return input;
@@ -314,7 +318,7 @@ public class InputInformationHandler {
                                "1. One star.\n" +
                                "2. Two stars.\n" +
                                "3. Three stars.");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return Villa.Type.ONE_STAR;
@@ -367,7 +371,7 @@ public class InputInformationHandler {
                                "2. Month.\n" +
                                "3. Day.\n" +
                                "4. Hour");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return Facility.RentType.YEAR;
@@ -453,7 +457,7 @@ public class InputInformationHandler {
                                "2. STUDIO,\n" +
                                "3. EXECUTIVE,\n" +
                                "4. PRESIDENTIAL");
-            inputNum = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            inputNum = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (inputNum) {
                 case 1:
                     return House.HouseType.SUITE;

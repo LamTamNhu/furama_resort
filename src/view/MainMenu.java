@@ -3,7 +3,7 @@ package view;
 
 import java.util.Scanner;
 
-import static utils.InputMenuChoiceHandler.inputNumForMenu;
+import static utils.MenuInputHandler.inputNumForMenu;
 
 public class MainMenu {
 

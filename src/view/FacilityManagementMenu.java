@@ -2,11 +2,13 @@ package view;
 
 import controller.FacilityController;
 import model.facilities.Facility;
-import utils.InputInformationHandler;
-import utils.InputMenuChoiceHandler;
+import utils.EntryInputHandler;
+import utils.MenuInputHandler;
 
 import java.util.LinkedHashMap;
 import java.util.Scanner;
+
+import static utils.MenuInputHandler.confirmDelete;
 
 public class FacilityManagementMenu {
     private final FacilityController controller = new FacilityController();
@@ -23,17 +25,17 @@ public class FacilityManagementMenu {
         Facility entryToAdd;
         do {
             System.out.print(ADD_NEW_MENU);
-            menuInput = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            menuInput = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (menuInput) {
                 case 1:
-                    entryToAdd = InputInformationHandler.inputVillaInfo();
+                    entryToAdd = EntryInputHandler.inputVillaInfo();
                     controller.addEntry(entryToAdd);
                     break;
                 case 2:
-                    entryToAdd = InputInformationHandler.inputHouseInfo();
+                    entryToAdd = EntryInputHandler.inputHouseInfo();
                     controller.addEntry(entryToAdd);
                 case 3:
-                    entryToAdd = InputInformationHandler.inputRoomInfo();
+                    entryToAdd = EntryInputHandler.inputRoomInfo();
                     controller.addEntry(entryToAdd);
                     break;
                 case 4:
@@ -58,7 +60,7 @@ public class FacilityManagementMenu {
         boolean isExit = false;
         do {
             System.out.print(FACILITY_MENU);
-            menuInput = InputMenuChoiceHandler.inputNumForMenu(scanner.nextLine());
+            menuInput = MenuInputHandler.inputNumForMenu(scanner.nextLine());
             switch (menuInput) {
                 case 1:
                     LinkedHashMap<Facility, Integer> facilities = (LinkedHashMap<Facility, Integer>) controller.getAll();
@@ -77,8 +79,13 @@ public class FacilityManagementMenu {
 //                    controller.getMaintenance();
 //                    break;
                 case 4:
-                    String idToRemove = InputInformationHandler.inputFacilityIdAlreadyInList();
-                    controller.remove(idToRemove);
+                    String idToRemove = EntryInputHandler.inputFacilityIdAlreadyInList();
+                    if (confirmDelete(idToRemove)) {
+                        controller.remove(idToRemove);
+                        System.out.println("Delete succeed!");
+                    } else {
+                        System.out.println("Delete canceled!");
+                    }
                     break;
                 case 5:
                     isExit = true;

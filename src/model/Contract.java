@@ -16,6 +16,12 @@ public class Contract {
         this.total = total;
     }
 
+    public Contract(String bookingId, Double deposit, Double total) {
+        this.bookingId = bookingId;
+        this.deposit = deposit;
+        this.total = total;
+    }
+
     public String getContractId() {
         return contractId;
     }
@@ -46,5 +52,13 @@ public class Contract {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "contractId='" + contractId + '\'' +
+               ", bookingId='" + bookingId + '\'' +
+               ", deposit=" + deposit +
+               "$, total=" + total + "$";
     }
 }

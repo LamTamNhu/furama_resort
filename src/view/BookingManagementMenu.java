@@ -2,9 +2,11 @@ package view;
 
 import controller.BookingController;
 import model.Booking;
+import model.Contract;
 import utils.BookingInputHandler;
 import utils.MenuInputHandler;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -30,9 +32,9 @@ public class BookingManagementMenu {
             switch (menuInput) {
                 case 1:
                     Booking bookingToAdd = BookingInputHandler.inputBookingInfo();
-                    if (controller.addBooking(bookingToAdd)){
+                    if (controller.addBooking(bookingToAdd)) {
                         System.out.println("Add success!");
-                    }else {
+                    } else {
                         System.out.println("Booking problem occurred!");
                     }
                     break;
@@ -42,12 +44,24 @@ public class BookingManagementMenu {
                         System.out.println(e);
                     }
                     break;
-//                case 3:
-//                    controller.addContract();
-//                    break;
-//                case 4:
-//                    controller.getAllContract();
-//                    break;
+                case 3:
+                    Contract contractToAdd = BookingInputHandler.addContract();
+                    if (controller.addContract(contractToAdd)) {
+                        System.out.println("Added succeed!");
+                    } else {
+                        System.out.println("Unknown error, add contract failed!");
+                    }
+                    break;
+                case 4:
+                    List<Contract> contractList = controller.getAllContract();
+                    System.out.println("-----Contracts list-----");
+                    if(contractList.isEmpty()){
+                        System.out.println("There is no contract at the moment.");
+                    }
+                    for (Contract e : contractList) {
+                        System.out.println(e);
+                    }
+                    break;
 //                case 5:
 //                    controller.editContract();
                 case 6:

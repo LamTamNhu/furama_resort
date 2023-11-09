@@ -2,16 +2,16 @@ package services.impl;
 
 import controller.FacilityController;
 import model.Booking;
+import model.Contract;
 import model.facilities.Facility;
 import repository.IBookingRepository;
 import repository.impl.BookingRepository;
-import repository.impl.FacilityRepository;
 import services.IBookingService;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Queue;
 
 public class BookingService implements IBookingService {
     IBookingRepository repository = new BookingRepository();
@@ -66,5 +66,20 @@ public class BookingService implements IBookingService {
     @Override
     public void writeToFile() {
 
+    }
+
+    @Override
+    public boolean addContract(Contract contract) {
+        return repository.addContract(contract);
+    }
+
+    @Override
+    public Queue<Booking> getBookingListForContract() {
+        return repository.getBookingListForContract();
+    }
+
+    @Override
+    public List<Contract> getAllContract() {
+        return repository.getAllContract();
     }
 }

@@ -154,6 +154,7 @@ public class FacilityRepository implements IFacilityRepository {
 
     @Override
     public LinkedHashMap<Facility, Integer> getMaintenance() {
+        updateFromFile();
         LinkedHashMap<Facility, Integer> maintenanceList = new LinkedHashMap<>();
         Integer value;
         for (Facility e : facilities.keySet()) {

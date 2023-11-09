@@ -4,6 +4,7 @@ import controller.BookingController;
 import controller.CustomerController;
 import controller.FacilityController;
 import model.Booking;
+import model.Contract;
 import model.facilities.Facility;
 import model.human.Customer;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class BookingInputHandler {
+    private static final BookingController controller = new BookingController();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static Booking inputBookingInfo() {
@@ -30,7 +32,6 @@ public class BookingInputHandler {
 
     private static Set<Booking> displayBookedTimeInTheSameService(String facilityId) {
         BookingComparator comparator = new BookingComparator();
-        BookingController controller = new BookingController();
         Set<Booking> bookings = controller.getAllBooking();
         Set<Booking> bookingListOfService = new TreeSet<>(comparator);
         System.out.println("Booked time of service " + facilityId + ":");
@@ -112,6 +113,45 @@ public class BookingInputHandler {
             } else {
                 System.out.println("Wrong date format, please try again!");
             }
+        } while (true);
+    }
+
+    public static Contract addContract() {
+        Queue<Booking> bookingListForContract = controller.getBookingListForContract();
+        System.out.println("Booking queue for contract: ");
+        if (bookingListForContract.isEmpty()) {
+            System.out.println("None of the moment.");
+            return null;
+        }
+        for (Booking e : bookingListForContract) {
+            System.out.println(e);
+        }
+        Booking bookingForContract = bookingListForContract.peek();
+        System.out.println("Creating contract for booking ID: " + bookingForContract.getBookingId());
+        Double total = inputFee(0.0);
+        Double deposit = inputFee(total);
+        return new Contract(bookingForContract.getBookingId(), deposit, total);
+    }
+
+    private static Double inputFee(Double total) {
+        double input = 0;
+        do {
+            if (total == 0) {
+                System.out.print("Enter total: ");
+            } else {
+                System.out.print("Enter deposit: ");
+            }
+            try {
+                input = Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Wrong format, enter a number!");
+            }
+            if (input <= total && total == 0) {
+                System.out.println("Need to be more than " + total + "!");
+            } else if (input > total && total != 0) {
+                System.out.println("Deposit can't be more than total!");
+            }
+            return input;
         } while (true);
     }
 }

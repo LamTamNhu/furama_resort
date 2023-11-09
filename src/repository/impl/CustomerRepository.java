@@ -26,7 +26,7 @@ public class CustomerRepository implements ICustomerRepository {
         }
     }
 
-    private void writeToFile() {
+    public void writeToFile() {
         List<String> listToWrite = new ArrayList<>();
         for (Customer e : customers) {
             listToWrite.add(e.convertAttributesToCsvFormat());
@@ -67,23 +67,25 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         updateFromFile();
         customers.add((Customer) entry);
         writeToFile();
+        return true;
     }
 
     @Override
-    public void removeByID(String id) {
+    public boolean removeByID(String id) {
         updateFromFile();
         int length = customers.size();
         for (int i = 0; i < length; i++) {
             if (id.equals(customers.get(i).getCustomerId())) {
                 customers.remove(i);
-                break;
+                writeToFile();
+                return true;
             }
         }
-        writeToFile();
+        return false;
     }
 
     @Override

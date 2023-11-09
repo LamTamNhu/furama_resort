@@ -12,8 +12,9 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         repository.addEntry(entry);
+        return false;
     }
 
     @Override
@@ -22,8 +23,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void removeEntry(String id) {
-        repository.removeByID(id);
+    public boolean removeEntry(String id) {
+        return repository.removeByID(id);
     }
 
     @Override
@@ -36,5 +37,8 @@ public class CustomerService implements ICustomerService {
         return repository.findByName(name);
     }
 
+    @Override
+    public void writeToFile() {
 
+    }
 }

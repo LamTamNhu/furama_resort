@@ -27,8 +27,8 @@ public class EmployeeController extends PersonController {
     }
 
     @Override
-    public void removeEntry(String idToDelete) {
-        employeeService.removeEntry(idToDelete);
+    public boolean removeEntry(String idToDelete) {
+        return employeeService.removeEntry(idToDelete);
     }
 
     @Override

@@ -75,7 +75,8 @@ public class FacilityRepository implements IFacilityRepository {
         facility.setRentType(rentType);
     }
 
-    private void writeToFile() {
+    @Override
+    public void writeToFile() {
         if (facilities.isEmpty()) {
             System.out.println("Writing an empty list!");
             return;
@@ -126,23 +127,41 @@ public class FacilityRepository implements IFacilityRepository {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         updateFromFile();
         facilities.put((Facility) entry, 0);
         writeToFile();
+        return true;
     }
 
 
     @Override
-    public void removeByID(String id) {
+    public boolean removeByID(String id) {
         updateFromFile();
         Facility entryToRemove = (Facility) findById(id);
-        facilities.remove(entryToRemove);
-        writeToFile();
+        if (facilities.remove(entryToRemove) != null) {
+            writeToFile();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void editEntry(String id, Object entry) {
 
+    }
+
+    @Override
+    public LinkedHashMap<Facility, Integer> getMaintenance() {
+        LinkedHashMap<Facility, Integer> maintenanceList = new LinkedHashMap<>();
+        Integer value;
+        for (Facility e : facilities.keySet()) {
+            value = facilities.get(e);
+            if (value >= 5) {
+                maintenanceList.put(e, value);
+            }
+        }
+        return maintenanceList;
     }
 }

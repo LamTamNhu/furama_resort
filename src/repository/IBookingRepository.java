@@ -1,4 +1,4 @@
 package repository;
 
-public interface IBookingRepository {
+public interface IBookingRepository extends Repository{
 }

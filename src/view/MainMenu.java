@@ -19,13 +19,7 @@ public class MainMenu {
                                             "Enter a number: ";
 
 
-//    private static final String BOOKING_MENU = "--------Booking Menu--------\n" +
-//            "1.\tAdd new booking\n" +
-//            "2.\tDisplay list booking\n" +
-//            "3.\tCreate new contracts\n" +
-//            "4.\tDisplay list contracts\n" +
-//            "5.\tEdit contracts\n" +
-//            "6.\tReturn main menu\n";
+//
 //    private static final String PROMOTION_MENU = "--------Promotion Menu--------\n" +
 //            "1.\tDisplay list customers use service\n" +
 //            "2.\tDisplay list customers get voucher\n" +
@@ -39,6 +33,7 @@ public class MainMenu {
         EmployeeManagementMenu employeeManagementMenu = new EmployeeManagementMenu();
         CustomerManagementMenu customerManagementMenu = new CustomerManagementMenu();
         FacilityManagementMenu facilityManagementMenu = new FacilityManagementMenu();
+        BookingManagementMenu bookingManagementMenu = new BookingManagementMenu();
         Integer menuInput;
         do {
             System.out.print(MAIN_MENU);
@@ -48,15 +43,16 @@ public class MainMenu {
             }
             switch (menuInput) {
                 case 1:
-                    employeeManagementMenu.displayEmployeeMenu();
+                    employeeManagementMenu.displayMenu();
                     break;
                 case 2:
-                    customerManagementMenu.displayCustomerMenu();
+                    customerManagementMenu.displayMenu();
                     break;
                 case 3:
-                    facilityManagementMenu.displayFacilityMenu();
+                    facilityManagementMenu.displayMenu();
                     break;
                 case 4:
+                    bookingManagementMenu.displayMenu();
                     break;
                 case 5:
                     break;
@@ -68,6 +64,4 @@ public class MainMenu {
             }
         } while (true);
     }
-
-
 }

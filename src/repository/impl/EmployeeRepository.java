@@ -27,7 +27,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
     }
 
-    private void writeToFile() {
+    public void writeToFile() {
         List<String> listToWrite = new ArrayList<>();
         for (Employee e : employees) {
             listToWrite.add(e.convertAttributesToCsvFormat());
@@ -69,23 +69,25 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         updateFromFile();
         employees.add((Employee) entry);
         writeToFile();
+        return true;
     }
 
     @Override
-    public void removeByID(String id) {
+    public boolean removeByID(String id) {
         updateFromFile();
         int length = employees.size();
         for (int i = 0; i < length; i++) {
             if (id.equals(employees.get(i).getEmployeeId())) {
                 employees.remove(i);
-                break;
+                writeToFile();
+                return true;
             }
         }
-        writeToFile();
+        return false;
     }
 
     @Override

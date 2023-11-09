@@ -10,7 +10,7 @@ public abstract class PersonController {
 
     public abstract void editEntry(String idToEdit, Object entryToEdit);
 
-    public abstract void removeEntry(String idToDelete);
+    public abstract boolean removeEntry(String idToDelete);
 
     public abstract Object findByName(String name);
 }

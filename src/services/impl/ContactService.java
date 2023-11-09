@@ -9,8 +9,9 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
 
+        return false;
     }
 
     @Override
@@ -19,8 +20,8 @@ public class ContactService implements IContactService {
     }
 
     @Override
-    public void removeEntry(String id) {
-
+    public boolean removeEntry(String id) {
+        return true;
     }
 
     @Override
@@ -31,5 +32,10 @@ public class ContactService implements IContactService {
     @Override
     public Boolean findByName(String name) {
         return null;
+    }
+
+    @Override
+    public void writeToFile() {
+
     }
 }

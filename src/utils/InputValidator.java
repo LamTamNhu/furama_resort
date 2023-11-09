@@ -2,6 +2,7 @@ package utils;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.SplittableRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,15 +72,18 @@ public class InputValidator {
 
     public static Boolean checkAgeRequirement(String birthdayString) {
         final int AGE_REQUIREMENT = 18;
-        String[] formattedBirthday;
-        formattedBirthday = birthdayString.split("[/-]");
-        int day = Integer.parseInt(formattedBirthday[0]);
-        int month = Integer.parseInt(formattedBirthday[1]);
-        int year = Integer.parseInt(formattedBirthday[2]);
-        LocalDate birthday = LocalDate.of(year, month, day);
+        LocalDate birthday = convertStringToLocalDate(birthdayString);
         LocalDate currentDate = LocalDate.now();
-
         return Period.between(birthday, currentDate).getYears() >= AGE_REQUIREMENT;
+    }
+
+    public static LocalDate convertStringToLocalDate(String dateString) {
+        final String REGEX = "[/-]";
+        String[] formattedDay = dateString.split(REGEX);
+        int day = Integer.parseInt(formattedDay[0]);
+        int month = Integer.parseInt(formattedDay[1]);
+        int year = Integer.parseInt(formattedDay[2]);
+        return LocalDate.of(year, month, day);
     }
 
     public static boolean checkFacilityName(String name) {

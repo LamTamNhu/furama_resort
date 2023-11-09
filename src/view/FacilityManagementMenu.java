@@ -16,12 +16,13 @@ public class FacilityManagementMenu {
     private int menuInput;
     private final String INVALID_INPUT = "Invalid input, please choose a number from the menu!";
 
+
     private void addNewFacilityMenu() {
         final String ADD_NEW_MENU = "1.\tAdd New Villa\n" +
                                     "2.\tAdd New House\n" +
                                     "3.\tAdd New Room\n" +
                                     "4.\tBack to menu\n" +
-                                    "Enter a number: ";
+                                    "Enter a number from menu: ";
         Facility entryToAdd;
         do {
             System.out.print(ADD_NEW_MENU);
@@ -46,9 +47,7 @@ public class FacilityManagementMenu {
         } while (true);
     }
 
-    public void displayFacilityMenu() {
-
-
+    public void displayMenu() {
         final String FACILITY_MENU = "--------Facility Menu--------\n" +
                                      "1\tDisplay list facility\n" +
                                      "2\tAdd new facility\n" +
@@ -66,7 +65,8 @@ public class FacilityManagementMenu {
                     LinkedHashMap<Facility, Integer> facilities = (LinkedHashMap<Facility, Integer>) controller.getAll();
                     if (facilities != null) {
                         for (Facility e : facilities.keySet()) {
-                            System.out.println(e);
+                            System.out.print(e);
+                            System.out.println(" | Times used in month: " + facilities.get(e));
                         }
                     } else {
                         System.out.println("List is empty!");
@@ -75,14 +75,27 @@ public class FacilityManagementMenu {
                 case 2:
                     addNewFacilityMenu();
                     break;
-//                case 3:
-//                    controller.getMaintenance();
-//                    break;
+                case 3:
+                    LinkedHashMap<Facility, Integer> maintenanceList = controller.getMaintenance();
+                    System.out.println("Facilities need maintenance: ");
+                    if (maintenanceList.isEmpty()) {
+                        System.out.println("None at the moment.");
+                    } else {
+                        for (Facility e : maintenanceList.keySet()) {
+                            System.out.print(e);
+                            System.out.println(" | Times used in month: " + maintenanceList.get(e));
+                        }
+                    }
+                    break;
                 case 4:
                     String idToRemove = FacilityInputHandler.inputFacilityIdAlreadyInList();
                     if (confirmDelete(idToRemove)) {
-                        controller.remove(idToRemove);
-                        System.out.println("Delete succeed!");
+                        if (controller.remove(idToRemove)) {
+                            System.out.println("Delete succeed!");
+                        } else {
+                            System.out.println("Entry no longer exist!");
+                        }
+
                     } else {
                         System.out.println("Delete canceled!");
                     }

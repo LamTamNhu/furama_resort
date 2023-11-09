@@ -13,8 +13,9 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         repository.addEntry(entry);
+        return false;
     }
 
     @Override
@@ -23,8 +24,8 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public void removeEntry(String id) {
-        repository.removeByID(id);
+    public boolean removeEntry(String id) {
+        return repository.removeByID(id);
     }
 
     @Override
@@ -35,5 +36,10 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Object findByName(String name) {
         return repository.findByName(name);
+    }
+
+    @Override
+    public void writeToFile() {
+
     }
 }

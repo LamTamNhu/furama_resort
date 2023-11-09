@@ -27,8 +27,8 @@ public class CustomerController extends PersonController {
     }
 
     @Override
-    public void removeEntry(String idToDelete) {
-        customerService.removeEntry(idToDelete);
+    public boolean removeEntry(String idToDelete) {
+        return customerService.removeEntry(idToDelete);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class CustomerManagementMenu {
     private final Scanner scanner = new Scanner(System.in);
     private static final byte CUSTOMER = 2;
 
-    public void displayCustomerMenu() {
+    public void displayMenu() {
         final String CUSTOMER_MENU = "--------Customer Menu--------\n" +
                                      "1.\tDisplay list customers\n" +
                                      "2.\tAdd new customer\n" +
@@ -23,7 +23,7 @@ public class CustomerManagementMenu {
                                      "4.\tDelete customer\n" +
                                      "5.\tSearch by name customer\n" +
                                      "6.\tReturn main menu\n" +
-                                     "Enter a number: ";
+                                     "Enter a number from menu: ";
         Integer menuInput;
         boolean isExit = false;
         do {
@@ -50,8 +50,12 @@ public class CustomerManagementMenu {
                 case 4:
                     String idToDelete = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(customerController);
                     if (confirmDelete(idToDelete)) {
-                        customerController.removeEntry(idToDelete);
-                        System.out.println("Delete succeed!");
+                        if (customerController.removeEntry(idToDelete)) {
+                            System.out.println("Delete succeed!");
+                        } else {
+                            System.out.println("Entry no longer exist!");
+                        }
+
                     } else {
                         System.out.println("Delete canceled!");
                     }

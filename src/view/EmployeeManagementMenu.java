@@ -16,7 +16,7 @@ public class EmployeeManagementMenu {
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public void displayEmployeeMenu() {
+    public void displayMenu() {
         final String EMPLOYEE_MENU = "--------Employee Menu--------\n" +
                                      "1\tDisplay list employees\n" +
                                      "2\tAdd new employee\n" +
@@ -24,7 +24,7 @@ public class EmployeeManagementMenu {
                                      "4\tDelete employee\n" +
                                      "5\tSearch employee by name\n" +
                                      "6\tReturn main menu\n" +
-                                     "Enter a number: ";
+                                     "Enter a number from menu: ";
         Integer menuInput;
         boolean isExit = false;
         do {
@@ -51,8 +51,11 @@ public class EmployeeManagementMenu {
                 case 4:
                     String idToDelete = PersonInputHandler.inputPersonDatabaseIdAlreadyInList(employeeController);
                     if (confirmDelete(idToDelete)) {
-                        employeeController.removeEntry(idToDelete);
-                        System.out.println("Delete succeed!");
+                        if (employeeController.removeEntry(idToDelete)) {
+                            System.out.println("Delete succeed!");
+                        } else {
+                            System.out.println("Unknown error, entry no longer exist!");
+                        }
                     } else {
                         System.out.println("Delete canceled!");
                     }

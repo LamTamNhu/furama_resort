@@ -1,11 +1,15 @@
 package services.impl;
 
+import model.facilities.Facility;
 import repository.Repository;
 import repository.impl.FacilityRepository;
 import services.IFacilityService;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 public class FacilityService implements IFacilityService {
-    Repository repository = new FacilityRepository();
+    private final Repository repository = new FacilityRepository();
 
     @Override
     public Object getAll() {
@@ -13,8 +17,9 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public void addEntry(Object entry) {
+    public boolean addEntry(Object entry) {
         repository.addEntry(entry);
+        return false;
     }
 
     @Override
@@ -23,8 +28,8 @@ public class FacilityService implements IFacilityService {
     }
 
     @Override
-    public void removeEntry(String id) {
-        repository.removeByID(id);
+    public boolean removeEntry(String id) {
+        return repository.removeByID(id);
     }
 
     @Override
@@ -35,5 +40,16 @@ public class FacilityService implements IFacilityService {
     @Override
     public Object findByName(String name) {
         return null;
+    }
+
+    @Override
+    public void writeToFile() {
+        repository.writeToFile();
+    }
+
+    @Override
+    public LinkedHashMap<Facility, Integer> getMaintenance() {
+        FacilityRepository temp = (FacilityRepository) repository;
+        return temp.getMaintenance();
     }
 }
